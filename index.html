@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana de Provas · Revisão 3º Tri — 7º Ano</title>
+<style>
+  :root{
+    --navy:#14213d; --navy-2:#1d2f52; --ink:#22283a;
+    --gold:#cdab5a; --gold-2:#b8963e;
+    --cream:#faf6ea; --paper:#fffdf7; --line:#e7dfc9;
+    --port:#c1533f; --hist:#a06a2c; --geo:#2f6b5e; --cien:#6b4f9e; --mat:#2b5a8c;
+    --ok:#2f7d54; --no:#bb4032;
+    --shadow:0 10px 30px rgba(20,33,61,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family:'DM Sans','Segoe UI',system-ui,sans-serif;
+    background:var(--cream); color:var(--ink); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:Georgia,'Times New Roman',serif}
+  button{font-family:inherit; cursor:pointer}
+  :focus-visible{outline:3px solid var(--gold); outline-offset:2px; border-radius:6px}
+
+  /* ---------- HEADER / HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(205,171,90,.18), transparent 55%),
+      linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 100%);
+    color:#f6f1e2; padding:22px 20px 20px;
+  }
+  .hero-inner{max-width:960px; margin:0 auto}
+  .hero-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+  .eyebrow{
+    font-size:12px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--gold); font-weight:700; margin:0 0 6px;
+  }
+  .hero h1{font-size:clamp(24px,5.2vw,38px); margin:0; line-height:1.06; letter-spacing:-.01em}
+  .hero .sub{margin:8px 0 0; color:#d7cfba; max-width:52ch; font-size:15px}
+  .reset-btn{
+    flex:0 0 auto; background:rgba(255,255,255,.08); color:#e7dfc9; border:1px solid rgba(205,171,90,.35);
+    border-radius:99px; padding:8px 14px; font-size:12.5px; font-weight:600; display:inline-flex; align-items:center; gap:6px;
+    transition:.2s;
+  }
+  .reset-btn:hover{background:rgba(187,64,50,.25); border-color:#bb4032; color:#fff}
+
+  /* level + streak strip */
+  .status{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:16px}
+  .level-card{
+    display:flex; align-items:center; gap:11px; background:rgba(255,255,255,.06);
+    border:1px solid rgba(205,171,90,.3); border-radius:14px; padding:10px 14px; flex:1 1 240px; min-width:220px;
+  }
+  .level-emb{font-size:30px; line-height:1; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+  .level-meta{flex:1}
+  .level-rank{font-family:Georgia,serif; font-size:16px; color:#f4efe1; font-weight:700}
+  .level-sub{font-size:11.5px; color:#c9c1ac; margin-top:1px}
+  .level-track{height:7px; border-radius:99px; background:rgba(255,255,255,.14); overflow:hidden; margin-top:6px}
+  .level-track > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--gold),#f2dd97); transition:width .6s ease}
+  .streak-card{
+    display:flex; align-items:center; gap:9px; background:rgba(255,255,255,.06);
+    border:1px solid rgba(205,171,90,.3); border-radius:14px; padding:10px 15px;
+  }
+  .streak-flame{font-size:24px; transition:transform .2s}
+  .streak-flame.pulse{transform:scale(1.35)}
+  .streak-num{font-family:Georgia,serif; font-size:22px; font-weight:700; color:var(--gold)}
+  .streak-lbl{font-size:11px; color:#c9c1ac; letter-spacing:.05em; line-height:1.2}
+
+  .week{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:16px}
+  .day{
+    background:rgba(255,255,255,.06); border:1px solid rgba(205,171,90,.28);
+    border-radius:12px; padding:10px 8px; text-align:center; cursor:pointer; position:relative;
+    transition:transform .15s ease, background .2s ease, border-color .2s;
+  }
+  .day:hover{transform:translateY(-3px); background:rgba(255,255,255,.12)}
+  .day .dow{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); font-weight:700}
+  .day .dt{font-size:12px; color:#cfc7b2; margin:2px 0 6px}
+  .day .em{font-size:22px; line-height:1}
+  .day .nm{font-size:12.5px; margin-top:5px; font-weight:600; color:#f2ecdc}
+  .day .mini{height:4px; border-radius:99px; background:rgba(255,255,255,.14); margin-top:8px; overflow:hidden}
+  .day .mini > i{display:block; height:100%; width:0; background:var(--gold); transition:width .5s ease}
+  .day .medal{position:absolute; top:-8px; right:-6px; font-size:20px; display:none; filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+  .day.master .medal{display:block; animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:960px; margin:0 auto; padding:24px 16px 60px}
+  .section-title{
+    font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-2);
+    font-weight:700; margin:8px 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .section-title::after{content:""; flex:1; height:1px; background:var(--line)}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px}
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:16px;
+    padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; gap:10px; cursor:pointer;
+    transition:transform .15s ease, box-shadow .2s;
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:0 16px 34px rgba(20,33,61,.16)}
+  .card.master{border-color:var(--gold); box-shadow:0 0 0 2px rgba(205,171,90,.35), var(--shadow)}
+  .card .stripe{position:absolute; inset:0 auto 0 0; width:6px; background:var(--acc)}
+  .card .top{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .card .badge{font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--acc); background:color-mix(in srgb,var(--acc) 12%,white); padding:4px 9px; border-radius:99px}
+  .card .em{font-size:30px}
+  .card .medal{position:absolute; top:12px; right:14px; font-size:24px; display:none; filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+  .card.master .medal{display:block; animation:pop .5s ease}
+  .card.master .em{display:none}
+  .card h3{margin:0; font-size:20px; color:var(--navy)}
+  .card .desc{margin:0; font-size:13px; color:#5c6070; min-height:34px}
+  .ring-row{display:flex; align-items:center; justify-content:space-between; margin-top:2px}
+  .ring{--p:0; width:46px; height:46px; border-radius:50%; display:grid; place-items:center;
+    background:conic-gradient(var(--acc) calc(var(--p)*1%), #eee 0); font-size:12px; font-weight:700; color:var(--navy)}
+  .ring span{background:var(--paper); width:34px; height:34px; border-radius:50%; display:grid; place-items:center}
+  .go{font-size:13px; font-weight:700; color:var(--acc)}
+
+  /* ---------- SUBJECT VIEW ---------- */
+  .subject{display:none}
+  .subject.active{display:block; animation:fade .3s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+  .backbar{display:flex; align-items:center; gap:12px; margin-bottom:8px}
+  .back{background:none; border:1px solid var(--line); color:var(--navy); border-radius:99px;
+    padding:7px 14px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px}
+  .back:hover{background:#fff}
+  .subj-head{display:flex; align-items:center; gap:14px; margin:4px 0 14px}
+  .subj-head .em{font-size:40px}
+  .subj-head h2{margin:0; font-size:clamp(24px,5vw,32px); color:var(--navy)}
+  .subj-head .u{font-size:13px; color:#6a6e7c; font-weight:600; letter-spacing:.04em}
+
+  .tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; border-bottom:1px solid var(--line); padding-bottom:2px}
+  .tab{background:none; border:none; padding:9px 14px; font-size:14px; font-weight:600; color:#7b7f8c;
+    border-radius:10px 10px 0 0; position:relative}
+  .tab.on{color:var(--accV)}
+  .tab.on::after{content:""; position:absolute; left:10px; right:10px; bottom:-3px; height:3px; background:var(--accV); border-radius:3px}
+  .tab .tick{color:var(--ok); margin-left:4px; font-weight:700}
+  .pane{display:none}
+  .pane.on{display:block; animation:fade .25s ease}
+
+  .note{background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--accV);
+    border-radius:12px; padding:16px 18px; margin:0 0 14px; box-shadow:var(--shadow)}
+  .note h4{margin:0 0 6px; font-size:17px; color:var(--navy); font-family:Georgia,serif}
+  .note p{margin:0 0 8px; font-size:14.5px; color:#3c414f}
+  .note p:last-child{margin-bottom:0}
+  .key{background:color-mix(in srgb,var(--accV) 16%,transparent); color:var(--navy); font-weight:600;
+    padding:0 4px; border-radius:4px}
+
+  .q{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:14px; box-shadow:var(--shadow)}
+  .q .qn{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accV)}
+  .q .qt{font-size:15.5px; font-weight:600; color:var(--navy); margin:5px 0 12px}
+  .opts{display:grid; gap:8px}
+  .opt{text-align:left; background:#fff; border:1.5px solid var(--line); border-radius:10px;
+    padding:11px 13px; font-size:14.5px; color:#2f3442; display:flex; gap:10px; align-items:flex-start; transition:.15s}
+  .opt:hover:not(:disabled){border-color:var(--accV); background:color-mix(in srgb,var(--accV) 6%,white)}
+  .opt .l{font-weight:700; color:var(--accV); flex:0 0 auto}
+  .opt.correct{border-color:var(--ok); background:#eaf6ee}
+  .opt.correct .l{color:var(--ok)}
+  .opt.wrong{border-color:var(--no); background:#fbecea}
+  .opt.wrong .l{color:var(--no)}
+  .opt:disabled{cursor:default}
+  .explain{margin-top:11px; font-size:14px; padding:11px 13px; border-radius:10px;
+    background:color-mix(in srgb,var(--accV) 8%,white); border:1px dashed color-mix(in srgb,var(--accV) 40%,var(--line)); display:none}
+  .explain.show{display:block}
+  .explain b{color:var(--navy)}
+  .scorebar{background:var(--paper); border:1px dashed var(--accV); border-radius:12px; padding:12px 15px;
+    font-size:14px; color:var(--navy); font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:8px}
+
+  .match-help{font-size:13.5px; color:#6a6e7c; margin:0 0 12px}
+  .match{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .col h4{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accV); margin:0 0 8px}
+  .chip{width:100%; text-align:left; background:var(--paper); border:1.5px solid var(--line);
+    border-radius:10px; padding:11px 12px; margin-bottom:8px; font-size:14px; color:#2f3442; transition:.15s; box-shadow:var(--shadow)}
+  .chip:hover:not(:disabled){border-color:var(--accV)}
+  .chip.sel{border-color:var(--accV); background:color-mix(in srgb,var(--accV) 10%,white); transform:scale(1.01)}
+  .chip.done{border-color:var(--ok); background:#eaf6ee; color:#2b5b3e; cursor:default}
+  .chip.done::before{content:"✓ "; color:var(--ok); font-weight:700}
+  .chip.miss{animation:shake .35s}
+  @keyframes shake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+  .ex{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:14px; box-shadow:var(--shadow)}
+  .ex .en{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accV)}
+  .ex .et{font-size:15px; color:var(--navy); font-weight:600; margin:5px 0 10px}
+  .ex .et em{font-style:normal; background:#f3eede; padding:1px 5px; border-radius:5px; font-family:Georgia,serif}
+  .ans-label{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:#8a8e9a; font-weight:700; margin:2px 0 5px}
+  .ans-field{width:100%; min-height:64px; resize:vertical; border:1.5px solid var(--line); border-radius:10px;
+    padding:10px 12px; font-family:inherit; font-size:14.5px; color:#2f3442; background:#fffef9; line-height:1.5}
+  .ans-field:focus{border-color:var(--accV); outline:none; box-shadow:0 0 0 3px color-mix(in srgb,var(--accV) 18%,transparent)}
+  .ans-saved{font-size:11.5px; color:var(--ok); font-weight:600; opacity:0; transition:.3s; margin-left:8px}
+  .ans-saved.show{opacity:1}
+  .ex-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:10px}
+  .reveal{background:var(--navy); color:#f4efe1; border:none; border-radius:99px; padding:8px 16px; font-size:13px; font-weight:600}
+  .reveal:hover{background:var(--navy-2)}
+  .sol{display:none; margin-top:12px; padding:13px 15px; border-radius:10px; background:#f7f2e6; border:1px solid var(--line); font-size:14.5px; color:#39404e}
+  .sol.show{display:block}
+  .sol .step{margin:0 0 7px}
+  .sol .step:last-child{margin-bottom:0}
+  .sol b{color:var(--navy)}
+  .sol .ans{margin-top:9px; padding-top:9px; border-top:1px dashed var(--line); font-weight:600; color:var(--ok)}
+  .selfcheck{display:none; gap:8px; margin-top:11px; align-items:center; flex-wrap:wrap}
+  .selfcheck.show{display:flex}
+  .selfcheck .lbl{font-size:13px; color:#6a6e7c; font-weight:600}
+  .sc-btn{border:1.5px solid var(--line); background:#fff; border-radius:99px; padding:7px 14px; font-size:13px; font-weight:600; color:#2f3442; transition:.15s}
+  .sc-btn.good:hover{border-color:var(--ok); background:#eaf6ee; color:var(--ok)}
+  .sc-btn.soso:hover{border-color:var(--gold-2); background:#fbf4e2; color:var(--gold-2)}
+  .sc-btn.picked{pointer-events:none; opacity:.6}
+
+  .done-flag{margin-top:6px; text-align:center; padding:14px; border-radius:12px;
+    background:color-mix(in srgb,var(--accV) 10%,white); border:1px dashed var(--accV); color:var(--navy); font-weight:600; display:none}
+  .done-flag.show{display:block}
+  .medal-banner{display:none; text-align:center; margin:0 0 16px; padding:16px; border-radius:14px;
+    background:linear-gradient(135deg,#fbf4dd,#f6ead0); border:1px solid var(--gold); color:var(--navy); box-shadow:var(--shadow)}
+  .medal-banner.show{display:block; animation:pop .5s ease}
+  .medal-banner .big{font-size:40px}
+  .medal-banner .t{font-family:Georgia,serif; font-size:19px; font-weight:700; margin-top:4px}
+  .medal-banner .s{font-size:13.5px; color:#6a6e7c; margin-top:2px}
+
+  footer{max-width:960px; margin:0 auto; padding:0 16px 40px; color:#8a8e9a; font-size:12.5px; text-align:center}
+  .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--navy); color:#f4efe1; padding:11px 18px; border-radius:99px; font-size:14px; font-weight:600;
+    box-shadow:0 10px 30px rgba(0,0,0,.25); opacity:0; transition:.3s; pointer-events:none; z-index:50}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+  .toast.xp{background:linear-gradient(120deg,var(--gold-2),var(--gold)); color:#20200f}
+
+  /* confetti */
+  .confetti{position:fixed; top:-12px; width:9px; height:14px; z-index:60; pointer-events:none; border-radius:2px; will-change:transform}
+
+  /* modal */
+  .modal-bg{position:fixed; inset:0; background:rgba(20,33,61,.55); display:none; align-items:center; justify-content:center; z-index:80; padding:20px}
+  .modal-bg.show{display:flex; animation:fade .2s ease}
+  .modal{background:var(--paper); border-radius:16px; padding:22px 22px 18px; max-width:360px; box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .modal h3{margin:0 0 8px; color:var(--navy); font-size:19px}
+  .modal p{margin:0 0 16px; font-size:14px; color:#5c6070}
+  .modal-row{display:flex; gap:10px; justify-content:flex-end}
+  .mbtn{border:none; border-radius:99px; padding:9px 16px; font-size:13.5px; font-weight:600}
+  .mbtn.ghost{background:#efe9d8; color:var(--navy)}
+  .mbtn.danger{background:var(--no); color:#fff}
+
+  @media(max-width:620px){
+    .week{grid-template-columns:repeat(5,1fr); gap:5px}
+    .day{padding:8px 4px}
+    .day .nm{font-size:10.5px}
+    .day .em{font-size:18px}
+    .match{grid-template-columns:1fr}
+    .col.defs{margin-top:4px}
+    .hero-top{flex-direction:column}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <p class="eyebrow">Escola Projeto Lápis de Cor · 7º Ano</p>
+        <h1>Semana de Provas — 3º Trimestre</h1>
+        <p class="sub">1ª Avaliação (P1) · 14 a 16 de outubro. Revise, responda no app e ganhe XP, sequências e medalhas.</p>
+      </div>
+      <button class="reset-btn" id="btnReset">↺ Recomeçar</button>
+    </div>
+
+    <div class="status">
+      <div class="level-card">
+        <div class="level-emb" id="lvlEmb">🌱</div>
+        <div class="level-meta">
+          <div class="level-rank" id="lvlRank">Iniciante</div>
+          <div class="level-sub" id="lvlSub">0 XP · próxima patente em 100</div>
+          <div class="level-track"><i id="lvlFill"></i></div>
+        </div>
+      </div>
+      <div class="streak-card">
+        <span class="streak-flame" id="flame">🔥</span>
+        <div><div class="streak-num" id="streakNum">0</div><div class="streak-lbl">sequência<br>de acertos</div></div>
+      </div>
+    </div>
+
+    <div class="week" id="week"></div>
+  </div>
+</header>
+
+<main>
+  <section id="home">
+    <div class="section-title">Escolha a matéria</div>
+    <div class="cards" id="cards"></div>
+  </section>
+  <section id="subjectView"></section>
+</main>
+
+<footer>
+  Feito para revisar em casa · responda no próprio app, confira as resoluções e complete as 4 atividades de cada matéria para ganhar a medalha 🥇
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>Recomeçar do zero?</h3>
+    <p>Isso apaga todo o seu progresso, o XP, as medalhas e as respostas que você escreveu. Não dá para desfazer.</p>
+    <div class="modal-row">
+      <button class="mbtn ghost" id="mCancel">Cancelar</button>
+      <button class="mbtn danger" id="mConfirm">Sim, apagar tudo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var SUBJECTS = [
+  /* ---------------- PORTUGUÊS ---------------- */
+  {
+    id:"port", nome:"Língua Portuguesa", em:"📖", acc:"var(--port)", dow:"Qua", dt:"14/10",
+    desc:"Interpretação de reportagem, concordância nominal e uso de porque, porquê, por que e por quê.",
+    resumo:[
+      {t:"O que é uma reportagem", h:[
+        "A <k>reportagem</k> é um gênero jornalístico que <b>aprofunda</b> um tema ou um fato. Ela é publicada em jornais, revistas, sites, rádio e TV.",
+        "Para escrever uma reportagem, o jornalista <b>pesquisa</b>, faz <b>entrevistas</b>, ouve especialistas e pessoas envolvidas, reúne <b>dados</b> e, muitas vezes, vai até o local dos fatos.",
+        "<b>Notícia x reportagem</b>: a <b>notícia</b> relata um fato recente de forma breve e objetiva (o que aconteceu). A <b>reportagem</b> é mais longa e explica o assunto com mais detalhes: causas, consequências, diferentes pontos de vista. Ela nem sempre depende de um fato do dia.",
+        "Exemplo: uma notícia informa que um rio transbordou ontem; uma reportagem investiga por que as enchentes se repetem na cidade, ouve moradores e especialistas e mostra dados de vários anos."
+      ]},
+      {t:"A estrutura da reportagem", h:[
+        "<b>Título (manchete)</b>: chama a atenção do leitor. <b>Linha fina (subtítulo)</b>: frase logo abaixo do título que resume ou complementa o assunto.",
+        "<k>Lide</k>: o primeiro parágrafo, que apresenta as informações principais respondendo às perguntas <b>o quê? quem? quando? onde? como? por quê?</b>",
+        "<b>Corpo do texto</b>: desenvolve o tema, muitas vezes dividido por <b>intertítulos</b> (pequenos títulos no meio do texto).",
+        "<b>Depoimentos e citações</b>: falas de entrevistados, em <b>discurso direto</b> (entre aspas: <i>“A água chegou ao joelho”, contou a moradora.</i>) ou <b>indireto</b> (<i>A moradora contou que a água chegou ao joelho.</i>).",
+        "<b>Recursos visuais</b>: fotos com legenda, gráficos, tabelas, mapas e <b>infográficos</b>. Também aparecem o nome do repórter (assinatura) e, às vezes, um <b>olho</b> (frase destacada em letras maiores)."
+      ]},
+      {t:"Como interpretar uma reportagem", h:[
+        "Ao ler, procure identificar: <b>qual é o tema</b>; <b>qual o objetivo</b> do texto (informar, alertar, denunciar, explicar); e <b>quem foi ouvido</b> (as fontes).",
+        "<k>Fato x opinião</k>: <b>fato</b> é o que pode ser comprovado (<i>A escola tem 500 alunos.</i>). <b>Opinião</b> é um ponto de vista, um julgamento (<i>A escola é a melhor da cidade.</i>). Na reportagem, as opiniões geralmente aparecem nas falas dos entrevistados.",
+        "<b>Dados e depoimentos</b> servem para dar <b>credibilidade</b> ao texto e mostrar diferentes lados do assunto.",
+        "<b>Linguagem</b>: formal, clara, de preferência em 3ª pessoa. Mesmo assim, preste atenção às escolhas do jornalista: quais pessoas ele entrevistou, que palavras usou, que fotos escolheu — tudo isso pode revelar um ponto de vista."
+      ]},
+      {t:"Concordância nominal", h:[
+        "<k>Concordância nominal</k> é a combinação, em <b>gênero</b> (masculino/feminino) e <b>número</b> (singular/plural), entre o <b>substantivo</b> e as palavras que se referem a ele: <b>artigos, adjetivos, pronomes e numerais</b>.",
+        "Exemplos: <i>o menino estudioso</i> → <i>as meninas estudiosas</i>; <i>meu livro novo</i> → <i>meus dois livros novos</i>.",
+        "<b>Adjetivo depois de dois ou mais substantivos</b>: concorda com o mais próximo ou vai para o plural (se os gêneros forem diferentes, usa-se o masculino plural). Ex.: <i>Comprei uma blusa e um casaco <u>novo</u>.</i> ou <i>Comprei uma blusa e um casaco <u>novos</u>.</i>",
+        "<b>Adjetivo antes de dois ou mais substantivos</b>: concorda com o mais próximo. Ex.: <i>Comprei <u>nova</u> blusa e casaco.</i>"
+      ]},
+      {t:"Casos especiais de concordância nominal", h:[
+        "<b>Meio</b>: quando significa “metade”, concorda (<i>meio quilo, meia hora, meia laranja</i>). Quando significa “um pouco”, não varia (<i>Ela está <u>meio</u> cansada.</i>).",
+        "<b>Bastante</b>: quando significa “muitos”, varia (<i>Li <u>bastantes</u> livros.</i>). Quando significa “muito” junto a verbo ou adjetivo, não varia (<i>Elas estudaram <u>bastante</u>.</i>).",
+        "<b>Menos</b>: nunca varia. Certo: <i>menos pessoas</i>. Errado: <i>menas</i> — essa palavra não existe!",
+        "<b>Anexo, obrigado, mesmo, próprio, quite</b>: concordam com o substantivo. Ex.: <i>As fotos seguem <u>anexas</u>.</i> / <i>Ela disse: “<u>Obrigada</u>!”</i> / <i>Elas <u>mesmas</u> fizeram.</i>",
+        "<b>É proibido, é necessário, é bom</b>: sem artigo, não variam (<i>É proibido entrada.</i> / <i>Água é bom.</i>); com artigo, concordam (<i>É proibida <u>a</u> entrada.</i>). <b>Só</b>: com sentido de “sozinho”, varia (<i>Eles ficaram sós.</i>); com sentido de “somente”, não varia (<i>Só eles vieram.</i>)."
+      ]},
+      {t:"Por que, por quê, porque e porquê", h:[
+        "<k>Por que</k> (separado, sem acento): usado em <b>perguntas</b> (<i>Por que você faltou?</i>) e quando equivale a “por qual motivo” ou “pelo qual/pela qual” (<i>Não sei por que ele saiu.</i> / <i>A rua por que passei é estreita.</i>).",
+        "<k>Por quê</k> (separado, com acento): usado no <b>final da frase</b>, antes de ponto, ou sozinho (<i>Você faltou por quê?</i> / <i>Ele saiu e não disse por quê.</i> / <i>Por quê?</i>).",
+        "<k>Porque</k> (junto, sem acento): usado em <b>respostas e explicações</b>; equivale a “pois” ou “uma vez que” (<i>Faltei porque estava doente.</i>).",
+        "<k>Porquê</k> (junto, com acento): é um <b>substantivo</b>, significa “o motivo”, “a razão”, e vem acompanhado de artigo ou outra palavra determinante (<i>Não entendi <u>o</u> porquê da briga.</i> / <i>Quero saber <u>os</u> porquês.</i>).",
+        "Dica: se der para trocar por “o motivo”, é <b>porquê</b>; se der para trocar por “pois”, é <b>porque</b>."
+      ]}
+    ],
+    quiz:[
+      {q:"O que diferencia a reportagem da notícia?", o:["A reportagem é sempre mais curta","A reportagem aprofunda o tema, com pesquisa, dados e entrevistas","A reportagem não usa fotos","A notícia traz mais opiniões"], a:1,
+       e:"A reportagem é mais longa e aprofundada: traz pesquisa, dados, entrevistas e diferentes pontos de vista."},
+      {q:"O lide de uma reportagem responde principalmente às perguntas:", o:["Quem escreveu e quanto custou","O quê, quem, quando, onde, como e por quê","Qual é a opinião do leitor","Qual é o título e a foto"], a:1,
+       e:"O lide (primeiro parágrafo) apresenta as informações essenciais: o quê, quem, quando, onde, como e por quê."},
+      {q:"Qual frase está de acordo com a norma-padrão?", o:["Havia menas pessoas na sala.","Ela está meio cansada.","Elas mesmo fizeram o trabalho.","As fotos seguem anexo."], a:1,
+       e:"“Meio” com sentido de “um pouco” não varia. O certo seria “menos pessoas”, “elas mesmas” e “fotos anexas”."},
+      {q:"Complete: “Você não veio à aula ___?”", o:["porque","porquê","por que","por quê"], a:3,
+       e:"No final da frase, antes do ponto de interrogação, usa-se “por quê” (separado e com acento)."},
+      {q:"Complete: “Ninguém entendeu o ___ da mudança.”", o:["porquê","por que","porque","por quê"], a:0,
+       e:"Antecedido de artigo (“o”) e com sentido de “o motivo”, é substantivo: porquê."}
+    ],
+    match:[
+      {t:"Reportagem", d:"Gênero jornalístico que aprofunda um tema com pesquisa e entrevistas"},
+      {t:"Lide", d:"Primeiro parágrafo: o quê, quem, quando, onde, como e por quê"},
+      {t:"Concordância nominal", d:"Acordo em gênero e número entre o substantivo e as palavras que o acompanham"},
+      {t:"Porque", d:"Usado em respostas e explicações; equivale a “pois”"},
+      {t:"Porquê", d:"Substantivo que significa “o motivo”, vem com artigo"}
+    ],
+    ex:[
+      {q:"Explique a diferença entre notícia e reportagem.",
+       s:["<b>1.</b> Pense no tamanho e na profundidade de cada texto.","<b>2.</b> A notícia relata; a reportagem investiga e explica."],
+       ans:"A notícia relata um fato recente de forma breve; a reportagem aprofunda o tema com pesquisa, dados e entrevistas."},
+      {q:"Quais perguntas o lide de uma reportagem deve responder?",
+       s:["<b>1.</b> O lide é o primeiro parágrafo.","<b>2.</b> Ele traz as informações essenciais do fato."],
+       ans:"O quê? Quem? Quando? Onde? Como? Por quê?"},
+      {q:"Classifique em fato ou opinião: (a) “A cidade registrou 30 dias de chuva em março.” (b) “Março foi um mês insuportável.”",
+       s:["<b>1.</b> Fato pode ser comprovado com dados.","<b>2.</b> Opinião é um julgamento pessoal."],
+       ans:"(a) fato; (b) opinião."},
+      {q:"Para que servem os depoimentos e os dados numa reportagem?",
+       s:["<b>1.</b> Pense na confiança do leitor no texto.","<b>2.</b> E na variedade de pontos de vista."],
+       ans:"Dão credibilidade ao texto e mostram diferentes pontos de vista sobre o assunto."},
+      {q:"Corrija a concordância: “As meninas estavam muito animado.”",
+       s:["<b>1.</b> O adjetivo se refere a “meninas”.","<b>2.</b> “Meninas” é feminino e plural."],
+       ans:"“As meninas estavam muito <b>animadas</b>.”"},
+      {q:"Corrija: “Ela ficou meia nervosa antes da prova.”",
+       s:["<b>1.</b> Aqui “meio” significa “um pouco”.","<b>2.</b> Com esse sentido, a palavra não varia."],
+       ans:"“Ela ficou <b>meio</b> nervosa antes da prova.”"},
+      {q:"Complete com “bastante” ou “bastantes”: (a) “Comprei ___ livros.” (b) “Eles estudaram ___.”",
+       s:["<b>1.</b> Em (a), significa “muitos” e acompanha um substantivo → varia.","<b>2.</b> Em (b), significa “muito” e acompanha o verbo → não varia."],
+       ans:"(a) bastantes; (b) bastante."},
+      {q:"Corrija: “Tinha menas gente na festa e é proibida entrada de animais.”",
+       s:["<b>1.</b> “Menos” nunca varia.","<b>2.</b> Sem artigo antes de “entrada”, “é proibido” fica invariável."],
+       ans:"“Tinha <b>menos</b> gente na festa e é <b>proibido</b> entrada de animais.” (ou “é proibida <b>a</b> entrada”)."},
+      {q:"Complete o diálogo: “— ___ você chegou atrasado? — ___ o ônibus quebrou.”",
+       s:["<b>1.</b> A primeira lacuna inicia uma pergunta → separado, sem acento.","<b>2.</b> A segunda é uma resposta/explicação → junto, sem acento."],
+       ans:"“<b>Por que</b> você chegou atrasado? — <b>Porque</b> o ônibus quebrou.”"},
+      {q:"Complete: “Ele foi embora e ninguém sabe ___. Ninguém entendeu o ___ dessa decisão.”",
+       s:["<b>1.</b> A primeira lacuna fica no final da frase → separado, com acento.","<b>2.</b> A segunda vem depois do artigo “o” → substantivo."],
+       ans:"“...ninguém sabe <b>por quê</b>. Ninguém entendeu o <b>porquê</b> dessa decisão.”"}
+    ]
+  },
+
+  /* ---------------- GEOGRAFIA ---------------- */
+  {
+    id:"geo", nome:"Geografia", em:"🌍", acc:"var(--geo)", dow:"Qui", dt:"15/10",
+    desc:"Região Nordeste (natureza, organização do espaço, Sertão e Meio-Norte) e Região Sudeste (espaço, urbanização e economia).",
+    resumo:[
+      {t:"Região Nordeste: apresentação", h:[
+        "O <k>Nordeste</k> é a região com o <b>maior número de estados</b>: nove — Maranhão, Piauí, Ceará, Rio Grande do Norte, Paraíba, Pernambuco, Alagoas, Sergipe e Bahia.",
+        "É a <b>segunda região mais populosa</b> do Brasil, atrás apenas do Sudeste. As maiores metrópoles são <b>Salvador, Recife e Fortaleza</b>.",
+        "Por suas diferenças naturais e econômicas, o Nordeste é dividido em quatro <b>sub-regiões</b>: <b>Zona da Mata</b>, <b>Agreste</b>, <b>Sertão</b> e <b>Meio-Norte</b>."
+      ]},
+      {t:"A natureza do Nordeste", h:[
+        "<b>Relevo</b>: planaltos (como o <b>Planalto da Borborema</b>), chapadas (<b>Chapada Diamantina</b>, Chapada do Araripe), a extensa <b>Depressão Sertaneja</b> e planícies no litoral.",
+        "<b>Clima</b>: <b>tropical úmido</b> no litoral leste, com chuvas no outono e inverno; <b>semiárido</b> no interior (Sertão), quente, com chuvas escassas e irregulares; e <b>tropical/equatorial</b> no Meio-Norte, mais chuvoso.",
+        "<b>Vegetação</b>: <b>Mata Atlântica</b> no litoral (muito devastada); <k>Caatinga</k> no Sertão — bioma <b>exclusivamente brasileiro</b>, com plantas adaptadas à seca, que perdem as folhas para economizar água e cactos como o mandacaru e o xique-xique; <b>Mata dos Cocais</b> no Meio-Norte; Cerrado no oeste; manguezais no litoral.",
+        "<b>Hidrografia</b>: o <k>rio São Francisco</k> (“Velho Chico”) nasce em Minas Gerais e atravessa o Sertão. Por ligar o Sudeste ao Nordeste, é chamado de <b>rio da integração nacional</b>. Nele há usinas hidrelétricas, como Sobradinho, Paulo Afonso e Xingó. O <b>rio Parnaíba</b> separa o Maranhão do Piauí. No Sertão, muitos rios são <b>temporários (intermitentes)</b>: secam na estiagem."
+      ]},
+      {t:"A organização do espaço nordestino", h:[
+        "A colonização portuguesa começou pelo <b>litoral nordestino</b>. Nos séculos XVI e XVII, a <b>cana-de-açúcar</b> ocupou a Zona da Mata, com trabalho de africanos escravizados. <b>Salvador</b> foi a primeira capital do Brasil (1549–1763).",
+        "A <b>pecuária</b> (criação de gado) avançou para o interior e ocupou o Sertão.",
+        "A herança colonial deixou <b>concentração de terras</b> e desigualdade. No século XX, milhões de nordestinos migraram para o Sudeste em busca de trabalho; hoje existe também a <b>migração de retorno</b>.",
+        "Nas últimas décadas a economia se diversificou: indústrias (polo petroquímico de <b>Camaçari</b>, na Bahia, e complexo portuário de <b>Suape</b>, em Pernambuco), <b>turismo</b> no litoral, <b>fruticultura irrigada</b> no vale do São Francisco (Petrolina e Juazeiro exportam uva e manga), <b>soja</b> no oeste da Bahia e no sul do Maranhão e do Piauí, e <b>energia eólica</b> (dos ventos), em que estados como Rio Grande do Norte e Bahia se destacam."
+      ]},
+      {t:"Zona da Mata e Agreste", h:[
+        "<b>Zona da Mata</b>: faixa litorânea do leste, de clima úmido, onde existia a Mata Atlântica. É a sub-região <b>mais populosa e urbanizada</b>, com as capitais e a tradição da cana-de-açúcar.",
+        "<k>Agreste</k>: faixa de <b>transição</b> entre a Zona da Mata (úmida) e o Sertão (seco). Tem pequenas e médias propriedades, policultura (vários cultivos), pecuária leiteira e grandes <b>feiras</b>, como as de Caruaru (PE) e Campina Grande (PB)."
+      ]},
+      {t:"O Sertão", h:[
+        "O <k>Sertão</k> é a <b>maior sub-região</b> do Nordeste. Tem clima <b>semiárido</b>, vegetação de <b>Caatinga</b> e longos períodos de <b>seca</b>.",
+        "Os rios costumam ser temporários, e a água é guardada em <b>açudes</b> e <b>cisternas</b>.",
+        "A seca não é o único problema: a <b>concentração de terras</b> e da água nas mãos de poucos e a falta de investimentos agravam a pobreza. Isso ficou conhecido como “indústria da seca”.",
+        "Hoje se fala em <b>convivência com o semiárido</b>: cisternas que guardam a água da chuva, barragens subterrâneas, criação de cabras e plantas resistentes, como a palma forrageira, e irrigação no vale do São Francisco.",
+        "A <b>transposição do rio São Francisco</b>, com canais chamados Eixo Norte e Eixo Leste, leva água para áreas secas de Pernambuco, Paraíba, Ceará e Rio Grande do Norte."
+      ]},
+      {t:"O Meio-Norte", h:[
+        "O <k>Meio-Norte</k> abrange o <b>Maranhão</b> e o oeste do <b>Piauí</b>. É uma área de <b>transição</b> entre o Sertão semiárido e a Amazônia úmida, por isso é mais chuvoso e tem rios perenes, como o Parnaíba.",
+        "Sua vegetação típica é a <b>Mata dos Cocais</b>, com palmeiras como o <b>babaçu</b> e a <b>carnaúba</b>.",
+        "<b>Extrativismo vegetal</b>: do babaçu se extrai óleo para alimentos, sabão e cosméticos; as <b>quebradeiras de coco babaçu</b> são mulheres que vivem dessa atividade. Da carnaúba se obtém uma <b>cera</b> usada em produtos industriais. Também há criação de gado, rizicultura (arroz) e, mais recentemente, <b>soja</b>.",
+        "Uma atração famosa da região são os <b>Lençóis Maranhenses</b>, com dunas e lagoas de água da chuva."
+      ]},
+      {t:"Região Sudeste: apresentação e natureza", h:[
+        "O <k>Sudeste</k> é formado por quatro estados: <b>São Paulo, Rio de Janeiro, Minas Gerais e Espírito Santo</b>. É a região <b>mais populosa</b> e a de <b>maior economia</b> do país.",
+        "<b>Relevo</b>: planaltos e serras, como a <b>Serra do Mar</b>, a Serra da Mantiqueira e a Serra do Espinhaço, além dos “mares de morros”.",
+        "<b>Clima</b>: tropical, <b>tropical de altitude</b> (mais ameno nas áreas altas) e tropical úmido no litoral. <b>Vegetação original</b>: Mata Atlântica, hoje muito devastada, e Cerrado.",
+        "<b>Rios</b>: Paraná, Tietê, Paraíba do Sul e São Francisco (que nasce em Minas Gerais). Muitos são aproveitados para gerar energia em hidrelétricas."
+      ]},
+      {t:"A organização do espaço no Sudeste", h:[
+        "No século XVIII, a descoberta de <b>ouro</b> em Minas Gerais atraiu muita gente e fez nascer cidades como Ouro Preto. Em 1763, a capital do Brasil passou de Salvador para o <b>Rio de Janeiro</b>.",
+        "No século XIX, o <k>café</k> se espalhou pelo Vale do Paraíba e pelo oeste paulista. Foram construídas <b>ferrovias</b>, e muitos <b>imigrantes</b> europeus, principalmente italianos, vieram trabalhar nas fazendas.",
+        "O dinheiro do café foi investido em <b>indústrias</b>, e o Sudeste se tornou o centro industrial do país no século XX. As indústrias atraíram <b>migrantes</b> de outras regiões, sobretudo do Nordeste."
+      ]},
+      {t:"Urbanização no Sudeste", h:[
+        "O Sudeste é a região <b>mais urbanizada</b> do Brasil: mais de 90% da população vive em cidades.",
+        "Lá estão as duas maiores metrópoles do país, <b>São Paulo</b> e <b>Rio de Janeiro</b>, além de Belo Horizonte e Vitória.",
+        "<k>Conurbação</k> é quando cidades vizinhas crescem tanto que se juntam. Entre São Paulo e Rio de Janeiro, ao longo do Vale do Paraíba, forma-se uma <k>megalópole</k>: uma grande área urbanizada que une metrópoles.",
+        "<b>Problemas urbanos</b>: moradias precárias e favelas, trânsito intenso, poluição, enchentes, falta de saneamento em algumas áreas, violência e desigualdade entre centro e periferia."
+      ]},
+      {t:"Atividades econômicas do Sudeste", h:[
+        "<b>Indústria</b>: maior parque industrial do país — automóveis no ABC paulista, siderurgia (aço) em Minas, no Rio (Volta Redonda) e no Espírito Santo, química, alimentos e tecnologia.",
+        "<b>Petróleo e gás</b>: grandes reservas no litoral do Rio, de São Paulo e do Espírito Santo, como a Bacia de Campos e a camada do <b>pré-sal</b>.",
+        "<b>Mineração</b>: o <k>Quadrilátero Ferrífero</k>, em Minas Gerais, é uma das maiores áreas de extração de <b>minério de ferro</b> do mundo; parte dele é exportada pelo porto de Vitória.",
+        "<b>Agropecuária moderna</b>: cana-de-açúcar e laranja em São Paulo, café em Minas Gerais (maior produtor do país), leite e eucalipto.",
+        "<b>Comércio e serviços</b>: São Paulo é o principal <b>centro financeiro</b> do país, com bancos, sedes de grandes empresas e a Bolsa de Valores. O <b>porto de Santos</b> é o maior da América Latina. O turismo também é forte, especialmente no Rio de Janeiro."
+      ]}
+    ],
+    quiz:[
+      {q:"Qual é o bioma típico do Sertão nordestino?", o:["Mata Atlântica","Caatinga","Pampa","Pantanal"], a:1,
+       e:"A Caatinga, exclusivamente brasileira, tem plantas adaptadas ao clima semiárido."},
+      {q:"Qual rio é chamado de “rio da integração nacional”?", o:["Rio Amazonas","Rio Tietê","Rio São Francisco","Rio Paraná"], a:2,
+       e:"O São Francisco nasce em Minas Gerais e atravessa o Nordeste, ligando as duas regiões."},
+      {q:"A sub-região de transição entre a Zona da Mata e o Sertão é o:", o:["Meio-Norte","Agreste","Pantanal","Recôncavo"], a:1,
+       e:"O Agreste fica entre a Zona da Mata, úmida, e o Sertão, seco."},
+      {q:"A Mata dos Cocais, com babaçu e carnaúba, é típica de qual sub-região?", o:["Zona da Mata","Sertão","Agreste","Meio-Norte"], a:3,
+       e:"O Meio-Norte (Maranhão e oeste do Piauí) é área de transição para a Amazônia, com a Mata dos Cocais."},
+      {q:"Qual é a região mais populosa e mais urbanizada do Brasil?", o:["Nordeste","Sul","Sudeste","Norte"], a:2,
+       e:"O Sudeste tem a maior população e mais de 90% dela vive em cidades."}
+    ],
+    match:[
+      {t:"Caatinga", d:"Vegetação do Sertão, adaptada à seca"},
+      {t:"Rio São Francisco", d:"Rio da integração nacional"},
+      {t:"Meio-Norte", d:"Transição para a Amazônia, com a Mata dos Cocais"},
+      {t:"Megalópole", d:"Grande área urbana que une metrópoles, como entre SP e RJ"},
+      {t:"Quadrilátero Ferrífero", d:"Área de extração de minério de ferro em Minas Gerais"}
+    ],
+    ex:[
+      {q:"Quantos estados formam o Nordeste? Cite três deles.",
+       s:["<b>1.</b> É a região com mais estados do Brasil.","<b>2.</b> Lembre das capitais mais conhecidas."],
+       ans:"Nove estados. Ex.: Bahia, Pernambuco e Ceará (também MA, PI, RN, PB, AL e SE)."},
+      {q:"Quais são as características do clima semiárido?",
+       s:["<b>1.</b> Pense na temperatura.","<b>2.</b> E na quantidade e distribuição das chuvas."],
+       ans:"Quente, com chuvas escassas e irregulares e longos períodos de seca."},
+      {q:"Por que muitas plantas da Caatinga perdem as folhas na seca?",
+       s:["<b>1.</b> As folhas perdem água por transpiração.","<b>2.</b> Sem folhas, a planta economiza água."],
+       ans:"Para diminuir a perda de água e sobreviver à estiagem."},
+      {q:"Explique a diferença entre rio perene e rio temporário (intermitente).",
+       s:["<b>1.</b> Pense no que acontece com o rio na época da seca.","<b>2.</b> Um corre o ano todo; o outro não."],
+       ans:"O perene corre o ano todo; o temporário seca durante a estiagem."},
+      {q:"Cite as quatro sub-regiões do Nordeste.",
+       s:["<b>1.</b> Do litoral para o interior.","<b>2.</b> Inclua a área de transição para a Amazônia."],
+       ans:"Zona da Mata, Agreste, Sertão e Meio-Norte."},
+      {q:"Qual é a importância do rio São Francisco para o Sertão?",
+       s:["<b>1.</b> Ele é perene e atravessa uma área seca.","<b>2.</b> Pense em água, energia e agricultura."],
+       ans:"Fornece água, gera energia em hidrelétricas, permite a irrigação (fruticultura) e, com a transposição, leva água a áreas secas."},
+      {q:"Cite duas atividades econômicas ligadas ao extrativismo no Meio-Norte.",
+       s:["<b>1.</b> Lembre das palmeiras da Mata dos Cocais.","<b>2.</b> O que se extrai de cada uma?"],
+       ans:"Extração de óleo do babaçu e de cera da carnaúba."},
+      {q:"Como o café contribuiu para a industrialização do Sudeste?",
+       s:["<b>1.</b> O café gerou muita riqueza no século XIX.","<b>2.</b> Esse dinheiro e as ferrovias foram usados depois."],
+       ans:"O lucro do café foi investido em indústrias, e a infraestrutura criada (ferrovias, portos) e a mão de obra imigrante ajudaram a industrialização."},
+      {q:"O que é megalópole? Dê um exemplo no Sudeste.",
+       s:["<b>1.</b> Pense em metrópoles que crescem até se unir.","<b>2.</b> Lembre do Vale do Paraíba."],
+       ans:"Grande área urbanizada que une metrópoles; ex.: a megalópole entre São Paulo e Rio de Janeiro."},
+      {q:"Cite dois problemas urbanos das metrópoles do Sudeste.",
+       s:["<b>1.</b> Pense em moradia, transporte e meio ambiente.","<b>2.</b> Escolha dois."],
+       ans:"Ex.: trânsito intenso e moradias precárias (também poluição, enchentes, violência)."}
+    ]
+  },
+
+  /* ---------------- MATEMÁTICA ---------------- */
+  {
+    id:"mat", nome:"Matemática", em:"➗", acc:"var(--mat)", dow:"Qui", dt:"15/10",
+    desc:"Linguagem algébrica, equações do 1º grau, medidas e conversões, razão, escala, proporção e regra de três.",
+    resumo:[
+      {t:"Linguagem algébrica", h:[
+        "Na <k>linguagem algébrica</k>, usamos <b>letras</b> para representar números desconhecidos ou que podem variar. Essas letras são chamadas de <b>variáveis</b> ou <b>incógnitas</b>.",
+        "Traduzindo frases para a álgebra: <b>o dobro</b> de um número → 2x; <b>o triplo</b> → 3x; <b>a metade</b> → x/2; <b>um número aumentado de 5</b> → x + 5; <b>o sucessor</b> → x + 1; <b>o quadrado</b> → x²; <b>a soma de dois números</b> → x + y.",
+        "Exemplo: “o triplo de um número diminuído de 4” → 3x − 4."
+      ]},
+      {t:"Simplificação e valor numérico", h:[
+        "<b>Termos semelhantes</b> têm a mesma parte literal (as mesmas letras, com os mesmos expoentes) e podem ser somados ou subtraídos: 3x + 5x = 8x; 4a + 2b − a = 3a + 2b.",
+        "<b>Propriedade distributiva</b>: multiplique o número de fora por cada termo dos parênteses: 2(x + 3) = 2x + 6.",
+        "<k>Valor numérico</k>: troque a letra pelo número e faça as contas, respeitando a ordem das operações. Ex.: 3x + 2, para x = 4 → 3 · 4 + 2 = 14. E 2a − b, para a = 5 e b = 3 → 10 − 3 = 7.",
+        "Cuidado com os negativos: x² para x = −3 → (−3) · (−3) = 9."
+      ]},
+      {t:"Igualdade e suas propriedades", h:[
+        "Uma <b>igualdade</b> funciona como uma <b>balança em equilíbrio</b>: os dois lados têm o mesmo valor.",
+        "A igualdade continua verdadeira se <b>somarmos ou subtrairmos o mesmo número</b> dos dois lados, ou se <b>multiplicarmos ou dividirmos os dois lados pelo mesmo número</b> (diferente de zero).",
+        "Essas propriedades são a base para resolver equações: o que fazemos de um lado, fazemos do outro."
+      ]},
+      {t:"Equação do 1º grau", h:[
+        "<k>Equação</k> é uma igualdade com pelo menos uma <b>incógnita</b>. É <b>do 1º grau</b> quando a incógnita tem expoente 1. Ex.: 2x + 3 = 11.",
+        "O que está antes do sinal de igual é o <b>1º membro</b>; o que está depois é o <b>2º membro</b>.",
+        "<k>Raiz (ou solução)</k> é o valor da incógnita que torna a igualdade verdadeira. Em 2x + 3 = 11, a raiz é x = 4.",
+        "<b>Verificação</b>: substitua a raiz na equação. 2 · 4 + 3 = 8 + 3 = 11 ✓. Se os dois lados ficarem iguais, a resposta está certa."
+      ]},
+      {t:"Resolvendo equações por operações inversas", h:[
+        "O objetivo é <b>isolar a incógnita</b>. Para isso, usamos as <b>operações inversas</b>: o que está somando passa para o outro lado subtraindo, e o que está multiplicando passa dividindo (isso vem das propriedades da igualdade).",
+        "Ex.: 5x − 7 = 18 → 5x = 18 + 7 → 5x = 25 → x = 25 ÷ 5 → <b>x = 5</b>.",
+        "<b>Incógnita dos dois lados</b>: junte os termos com x de um lado e os números do outro. Ex.: 3x + 4 = x + 10 → 3x − x = 10 − 4 → 2x = 6 → <b>x = 3</b>."
+      ]},
+      {t:"Equações com parênteses e frações", h:[
+        "<b>Com parênteses</b>: aplique a distributiva primeiro. Ex.: 3(x − 2) = 12 → 3x − 6 = 12 → 3x = 18 → <b>x = 6</b>.",
+        "<b>Com fração simples</b>: isole a fração e depois multiplique. Ex.: x/2 + 3 = 7 → x/2 = 4 → x = 4 · 2 → <b>x = 8</b>.",
+        "<b>Com mais de uma fração</b>: use o mmc dos denominadores para eliminá-los. Ex.: x/2 + x/3 = 10 → mmc = 6 → 3x + 2x = 60 → 5x = 60 → <b>x = 12</b>."
+      ]},
+      {t:"Resolvendo problemas com equações", h:[
+        "Passo a passo: 1) leia com atenção; 2) escolha a letra para o valor desconhecido; 3) <b>monte a equação</b>; 4) resolva; 5) <b>verifique</b>; 6) escreva a resposta.",
+        "<b>Problema do cotidiano</b>: “Pensei em um número, multipliquei por 3, somei 5 e obtive 26.” → 3x + 5 = 26 → 3x = 21 → x = 7.",
+        "<b>Problema geométrico</b>: um retângulo tem lados x e x + 4 e perímetro 28 cm. → 2x + 2(x + 4) = 28 → 4x + 8 = 28 → 4x = 20 → x = 5. Os lados medem 5 cm e 9 cm."
+      ]},
+      {t:"Unidades de medida e conversões", h:[
+        "<b>Tempo</b>: 1 dia = 24 h; 1 h = 60 min; 1 min = 60 s. Ex.: 2,5 h = 2 h 30 min = 150 min.",
+        "<b>Massa</b>: 1 t (tonelada) = 1.000 kg; 1 kg = 1.000 g; 1 g = 1.000 mg.",
+        "<b>Capacidade</b>: 1 L = 1.000 mL. <b>Volume</b>: 1 m³ = 1.000 L; 1 dm³ = 1 L; 1 cm³ = 1 mL.",
+        "Regra geral: de uma unidade <b>maior para uma menor</b>, <b>multiplique</b> (3 kg = 3.000 g); de uma <b>menor para uma maior</b>, <b>divida</b> (500 mL = 0,5 L)."
+      ]},
+      {t:"Razão e escala", h:[
+        "<k>Razão</k> é a comparação entre duas grandezas por meio de uma divisão: a/b. Ex.: numa turma com 15 meninas e 10 meninos, a razão entre meninas e meninos é 15/10.",
+        "<b>Forma irredutível</b>: simplifique até não dar mais: 15/10 = 3/2 (para cada 3 meninas, há 2 meninos); 12/18 = 2/3.",
+        "<k>Escala</k> é a razão entre a medida no desenho ou mapa e a medida real, na mesma unidade. Uma escala de 1 : 100.000 significa que 1 cm no mapa vale 100.000 cm (1 km) na realidade.",
+        "Ex.: num mapa com escala 1 : 200.000, uma distância de 5 cm vale 5 × 200.000 = 1.000.000 cm = <b>10 km</b>."
+      ]},
+      {t:"Proporção e propriedade fundamental", h:[
+        "<k>Proporção</k> é a igualdade entre duas razões. Ex.: 2/3 = 4/6.",
+        "<b>Propriedade fundamental</b>: numa proporção, o produto dos meios é igual ao produto dos extremos. Na prática, fazemos a <b>multiplicação cruzada</b>: se a/b = c/d, então a · d = b · c.",
+        "Ex.: 2/3 = 4/6 → 2 · 6 = 3 · 4 → 12 = 12 ✓.",
+        "Para achar um valor desconhecido: x/5 = 6/10 → 10x = 30 → <b>x = 3</b>."
+      ]},
+      {t:"Grandezas diretamente e inversamente proporcionais", h:[
+        "<k>Diretamente proporcionais (GDP)</k>: quando uma <b>dobra</b>, a outra também <b>dobra</b>; quando uma cai pela metade, a outra também cai. Ex.: quantidade de pães e preço a pagar; distância percorrida e combustível gasto.",
+        "<k>Inversamente proporcionais (GIP)</k>: quando uma <b>dobra</b>, a outra <b>cai pela metade</b>. Ex.: velocidade e tempo de viagem; número de trabalhadores e tempo para terminar uma obra.",
+        "Atenção: nem toda relação é proporcional. Idade e altura de uma pessoa, por exemplo, não são."
+      ]},
+      {t:"Regra de três simples", h:[
+        "A <k>regra de três</k> serve para descobrir um valor desconhecido quando conhecemos três valores de duas grandezas proporcionais.",
+        "Passos: 1) organize uma tabela com as grandezas; 2) descubra se elas são <b>diretas</b> ou <b>inversas</b>; 3) monte a proporção e resolva.",
+        "<b>Direta</b>: 3 kg custam R$ 12,00. Quanto custam 5 kg? → 3/5 = 12/x → 3x = 60 → <b>x = R$ 20,00</b>.",
+        "<b>Inversa</b>: 4 pedreiros fazem um muro em 12 dias. Em quantos dias 6 pedreiros fazem o mesmo muro? Mais pedreiros → menos dias. Multiplique em linha: 4 · 12 = 6 · x → 48 = 6x → <b>x = 8 dias</b>."
+      ]}
+    ],
+    quiz:[
+      {q:"A razão 12/18 na forma irredutível é:", o:["6/9","2/3","3/2","4/6"], a:1,
+       e:"Dividindo 12 e 18 por 6, obtemos 2/3, que não pode mais ser simplificada."},
+      {q:"Qual é o valor numérico de 3x − 1 para x = 4?", o:["11","13","7","12"], a:0,
+       e:"3 · 4 − 1 = 12 − 1 = 11."},
+      {q:"Qual é a raiz da equação 2x + 6 = 14?", o:["10","8","4","3"], a:2,
+       e:"2x = 14 − 6 → 2x = 8 → x = 4. Verificação: 2 · 4 + 6 = 14 ✓."},
+      {q:"Quantos minutos há em 1,5 hora?", o:["150","90","105","60"], a:1,
+       e:"1,5 × 60 = 90 minutos (1 hora e 30 minutos)."},
+      {q:"Qual par de grandezas é inversamente proporcional?", o:["Quantidade de pães e preço","Distância e combustível gasto","Velocidade e tempo de viagem","Idade e altura"], a:2,
+       e:"Se a velocidade dobra, o tempo de viagem cai pela metade: grandezas inversamente proporcionais."}
+    ],
+    match:[
+      {t:"Incógnita", d:"Letra que representa o valor desconhecido"},
+      {t:"Raiz da equação", d:"Valor que torna a igualdade verdadeira"},
+      {t:"Escala", d:"Razão entre a medida no mapa e a medida real"},
+      {t:"Propriedade fundamental", d:"Produto dos meios = produto dos extremos"},
+      {t:"Grandezas inversas", d:"Quando uma dobra, a outra cai pela metade"}
+    ],
+    ex:[
+      {q:"Escreva em linguagem algébrica: “o triplo de um número diminuído de 4”.",
+       s:["<b>1.</b> Triplo de um número → 3x.","<b>2.</b> Diminuído de 4 → subtrai 4."],
+       ans:"3x − 4."},
+      {q:"Simplifique <em>5x + 3 − 2x + 7</em> e calcule o valor numérico para x = 2.",
+       s:["<b>1.</b> Junte os termos semelhantes: 5x − 2x = 3x e 3 + 7 = 10 → 3x + 10.","<b>2.</b> Para x = 2: 3 · 2 + 10 = 16."],
+       ans:"3x + 10; valor numérico = 16."},
+      {q:"Resolva e verifique: <em>4x − 5 = 15</em>.",
+       s:["<b>1.</b> 4x = 15 + 5 → 4x = 20 → x = 5.","<b>2.</b> Verificação: 4 · 5 − 5 = 20 − 5 = 15 ✓."],
+       ans:"x = 5."},
+      {q:"Resolva: <em>5x + 2 = 2x + 14</em>.",
+       s:["<b>1.</b> Termos com x de um lado: 5x − 2x = 14 − 2.","<b>2.</b> 3x = 12 → x = 4."],
+       ans:"x = 4."},
+      {q:"Resolva: <em>2(x + 3) = 18</em>.",
+       s:["<b>1.</b> Distributiva: 2x + 6 = 18.","<b>2.</b> 2x = 12 → x = 6."],
+       ans:"x = 6."},
+      {q:"Resolva: <em>x/3 + 2 = 6</em>.",
+       s:["<b>1.</b> Isole a fração: x/3 = 6 − 2 = 4.","<b>2.</b> x = 4 · 3 = 12."],
+       ans:"x = 12."},
+      {q:"O comprimento de um retângulo é o dobro da largura, e o perímetro é 36 cm. Quais são as medidas dos lados?",
+       s:["<b>1.</b> Largura = x; comprimento = 2x.","<b>2.</b> Perímetro: 2x + 2 · 2x = 36 → 6x = 36 → x = 6.","<b>3.</b> Comprimento = 2 · 6 = 12."],
+       ans:"Largura 6 cm e comprimento 12 cm."},
+      {q:"Converta: (a) 3 kg em gramas; (b) 2,5 L em mL; (c) 2 h 15 min em minutos.",
+       s:["<b>1.</b> 1 kg = 1.000 g e 1 L = 1.000 mL → multiplique por 1.000.","<b>2.</b> 2 h = 120 min; 120 + 15 = 135."],
+       ans:"(a) 3.000 g; (b) 2.500 mL; (c) 135 min."},
+      {q:"Num mapa com escala 1 : 500.000, duas cidades estão a 4 cm de distância. Qual é a distância real em km?",
+       s:["<b>1.</b> 4 × 500.000 = 2.000.000 cm.","<b>2.</b> 1 km = 100.000 cm → 2.000.000 ÷ 100.000 = 20."],
+       ans:"20 km."},
+      {q:"Resolva com regra de três: (a) 4 cadernos custam R$ 18,00; quanto custam 10? (b) A 60 km/h, uma viagem leva 3 h; quanto tempo leva a 90 km/h?",
+       s:["<b>1.</b> (a) Direta: 4/10 = 18/x → 4x = 180 → x = 45.","<b>2.</b> (b) Inversa (mais velocidade, menos tempo): 60 · 3 = 90 · x → 180 = 90x → x = 2."],
+       ans:"(a) R$ 45,00; (b) 2 horas."}
+    ]
+  },
+
+  /* ---------------- CIÊNCIAS ---------------- */
+  {
+    id:"cien", nome:"Ciências", em:"🔬", acc:"var(--cien)", dow:"Sex", dt:"16/10",
+    desc:"O que é um ser vivo, classificação dos seres vivos, vírus e os reinos Monera, Protoctista e Fungi.",
+    resumo:[
+      {t:"O que é um ser vivo?", h:[
+        "Os <k>seres vivos</k> têm um conjunto de características que os diferenciam dos seres não vivos, como uma pedra ou a água.",
+        "<b>São formados por células</b>: podem ser <b>unicelulares</b> (uma só célula, como as bactérias) ou <b>pluricelulares</b> (muitas células, como plantas e animais).",
+        "<b>Têm um ciclo de vida</b>: nascem, crescem, podem se reproduzir e morrem. Pela <b>reprodução</b>, transmitem suas características aos descendentes, graças ao <b>material genético (DNA)</b>.",
+        "<b>Têm metabolismo</b>: obtêm energia e nutrientes (nutrição e respiração) para manter o corpo funcionando. <b>Reagem a estímulos</b> do ambiente, como luz, calor e toque, e mantêm seu equilíbrio interno.",
+        "Ao longo de muitas gerações, as populações de seres vivos podem se modificar e se <b>adaptar</b> ao ambiente."
+      ]},
+      {t:"As células e a nutrição", h:[
+        "A <k>célula</k> é a menor unidade de um ser vivo. As partes básicas são a <b>membrana plasmática</b>, o <b>citoplasma</b> e o <b>material genético</b>.",
+        "<b>Célula procariótica</b>: não tem núcleo organizado; o material genético fica solto no citoplasma. É a célula das <b>bactérias</b>.",
+        "<b>Célula eucariótica</b>: tem <b>núcleo</b> envolvido por uma membrana. É a célula dos protozoários, algas, fungos, plantas e animais.",
+        "Quanto à nutrição, os seres podem ser <b>autótrofos</b>, que produzem o próprio alimento, geralmente pela fotossíntese (plantas e algas), ou <b>heterótrofos</b>, que obtêm alimento de outros seres (animais e fungos)."
+      ]},
+      {t:"A importância da classificação", h:[
+        "Existem <b>milhões de espécies</b> de seres vivos. Para estudá-los, os cientistas os <b>agrupam por semelhanças</b>. A ciência que faz isso é a <k>Taxonomia</k>.",
+        "Classificar facilita o estudo, a comunicação entre cientistas do mundo todo e a compreensão do parentesco entre os seres vivos.",
+        "No século XVIII, o naturalista sueco <b>Lineu</b> criou um sistema de classificação em categorias, da mais ampla para a mais específica: <b>Reino → Filo → Classe → Ordem → Família → Gênero → Espécie</b>.",
+        "<k>Espécie</k> é o grupo de seres muito parecidos que podem se reproduzir entre si e gerar <b>descendentes férteis</b>."
+      ]},
+      {t:"Nome científico e os reinos", h:[
+        "Cada espécie tem um <k>nome científico</k>, escrito em <b>latim</b> e formado por <b>duas palavras</b>: o gênero (com letra <b>maiúscula</b>) e a espécie (com letra <b>minúscula</b>). Ele deve vir em <b>itálico</b> ou sublinhado. Ex.: <i>Homo sapiens</i> (ser humano), <i>Canis familiaris</i> (cão), <i>Felis catus</i> (gato).",
+        "O nome científico é o mesmo em qualquer país, evitando confusões com os nomes populares (a mandioca também é chamada de aipim ou macaxeira!).",
+        "Os seres vivos são organizados em <b>cinco reinos</b>: <b>Monera</b> (bactérias), <b>Protoctista</b> (protozoários e algas), <b>Fungi</b> (fungos), <b>Plantae</b> (plantas) e <b>Animalia</b> (animais).",
+        "Os critérios usados incluem: tipo de célula (com ou sem núcleo), número de células e forma de nutrição."
+      ]},
+      {t:"Os vírus", h:[
+        "Os <k>vírus</k> são <b>acelulares</b>: não têm células. Por isso, <b>não pertencem a nenhum reino</b>, e os cientistas discutem se devem ser considerados seres vivos.",
+        "São formados por uma <b>cápsula de proteína</b> que envolve o <b>material genético</b> (DNA ou RNA). São muito menores que as bactérias e só podem ser vistos com microscópio eletrônico.",
+        "São <b>parasitas intracelulares obrigatórios</b>: só se reproduzem <b>dentro de uma célula</b> de outro ser vivo. Fora dela ficam inativos.",
+        "<b>Doenças causadas por vírus (viroses)</b>: gripe, resfriado, covid-19, sarampo, catapora, caxumba, dengue, febre amarela, zika, raiva, poliomielite e aids, entre outras.",
+        "<b>Prevenção</b>: <b>vacinas</b>, que estimulam o corpo a produzir defesas (anticorpos), higiene das mãos, uso de máscara em alguns casos e combate ao mosquito <i>Aedes aegypti</i>. Atenção: <b>antibióticos não funcionam contra vírus</b>!"
+      ]},
+      {t:"Reino Monera: as bactérias", h:[
+        "O <k>Reino Monera</k> reúne as <b>bactérias</b> e as <b>cianobactérias</b>. São seres <b>unicelulares</b> e <b>procariontes</b> (sem núcleo organizado).",
+        "Podem ser <b>autótrofas</b> (as cianobactérias fazem fotossíntese) ou <b>heterótrofas</b>. Reproduzem-se por <b>divisão binária</b>: uma célula se divide em duas, muito rapidamente.",
+        "<b>Formas</b>: cocos (esféricas), bacilos (bastão), espirilos (espiral) e vibriões (vírgula).",
+        "<b>Importância</b>: muitas são <b>decompositoras</b> e reciclam nutrientes na natureza; algumas vivem nas raízes de plantas como o feijão e <b>fixam nitrogênio</b> no solo; são usadas para produzir <b>iogurte e queijo</b> (lactobacilos) e medicamentos; e muitas vivem no nosso intestino, ajudando na digestão.",
+        "<b>Doenças bacterianas</b>: tuberculose, tétano, cólera, leptospirose, coqueluche, hanseníase e alguns tipos de pneumonia. São tratadas com <b>antibióticos</b>, que devem ser usados só com receita médica, para evitar bactérias resistentes. Vacinas e saneamento básico ajudam na prevenção."
+      ]},
+      {t:"Reino Protoctista: os protozoários", h:[
+        "O <k>Reino Protoctista</k> (ou Protista) reúne seres <b>eucariontes</b> simples: os <b>protozoários</b> e as <b>algas</b>.",
+        "Os <b>protozoários</b> são <b>unicelulares e heterótrofos</b>. Eles se movimentam de formas diferentes: por <b>pseudópodes</b> (“falsos pés”, como a ameba), por <b>cílios</b> (como o paramécio) ou por <b>flagelos</b> (como o tripanossomo).",
+        "<b>Doenças causadas por protozoários</b>: <b>doença de Chagas</b> (transmitida pelo inseto barbeiro), <b>malária</b> (transmitida pela fêmea do mosquito <i>Anopheles</i>), <b>amebíase</b> e <b>giardíase</b> (por água e alimentos contaminados), leishmaniose (transmitida pelo mosquito-palha) e toxoplasmose.",
+        "<b>Prevenção</b>: saneamento básico, beber água tratada ou fervida, lavar bem os alimentos, usar telas e mosquiteiros e melhorar as moradias (casas de pau a pique podem abrigar o barbeiro)."
+      ]},
+      {t:"Reino Protoctista: as algas", h:[
+        "As <k>algas</k> são <b>autótrofas</b>: fazem fotossíntese. Podem ser <b>unicelulares</b> ou <b>pluricelulares</b> e vivem principalmente na água.",
+        "Há algas verdes, vermelhas e pardas. As algas microscópicas que flutuam na água formam o <b>fitoplâncton</b>, que produz grande parte do <b>oxigênio</b> do planeta e é a base das cadeias alimentares aquáticas.",
+        "<b>Usos</b>: alimentação (a alga nori, do sushi), produção de ágar e de cosméticos.",
+        "Quando certas algas se multiplicam demais, podem causar a <b>maré vermelha</b>, que libera toxinas e prejudica peixes e outros seres marinhos."
+      ]},
+      {t:"Reino Fungi: características", h:[
+        "Os <k>fungos</k> são <b>eucariontes</b> e podem ser <b>unicelulares</b> (as leveduras, como o fermento de pão) ou <b>pluricelulares</b> (cogumelos, bolores ou mofos, orelhas-de-pau).",
+        "São <b>heterótrofos por absorção</b>: liberam substâncias que digerem o alimento fora do corpo e depois absorvem os nutrientes.",
+        "<b>Fungos não são plantas</b>: não fazem fotossíntese, não têm clorofila e sua parede celular é de <b>quitina</b>.",
+        "O corpo dos fungos pluricelulares é formado por filamentos chamados <b>hifas</b>; o conjunto de hifas forma o <b>micélio</b>. Eles se reproduzem principalmente por <b>esporos</b>, levados pelo ar e pela água."
+      ]},
+      {t:"A importância dos fungos", h:[
+        "<b>Decompositores</b>: junto com as bactérias, decompõem restos de seres vivos e devolvem nutrientes ao solo.",
+        "<b>Alimentação</b>: cogumelos comestíveis (champignon, shimeji, shiitake). Na <b>fermentação</b>, a levedura produz gás carbônico, que faz a massa do <b>pão</b> crescer; também é usada para fazer bebidas e queijos.",
+        "<b>Medicamentos</b>: em 1928, Alexander Fleming descobriu a <b>penicilina</b>, o primeiro antibiótico, produzida por um fungo do gênero <i>Penicillium</i>.",
+        "<b>Prejuízos</b>: causam <b>micoses</b> (frieira, sapinho, micose de unha), estragam alimentos com mofo, alguns cogumelos são <b>venenosos</b> e há fungos que atacam plantações.",
+        "<b>Liquens</b>: associação entre um fungo e uma alga (ou cianobactéria), em que os dois se beneficiam."
+      ]}
+    ],
+    quiz:[
+      {q:"Qual destas é uma característica dos seres vivos?", o:["Não reagem a estímulos","São formados por células","Não precisam de energia","Não se reproduzem"], a:1,
+       e:"Todos os seres vivos são formados por uma ou mais células."},
+      {q:"Qual é a forma correta de escrever o nome científico do ser humano?", o:["homo sapiens","Homo Sapiens","Homo sapiens","HOMO SAPIENS"], a:2,
+       e:"Gênero com inicial maiúscula e espécie com minúscula, em itálico: Homo sapiens."},
+      {q:"Por que os vírus não pertencem a nenhum reino?", o:["Porque são muito grandes","Porque não têm células","Porque fazem fotossíntese","Porque vivem só na água"], a:1,
+       e:"Os vírus são acelulares, e os reinos agrupam seres formados por células."},
+      {q:"As bactérias pertencem ao reino:", o:["Fungi","Protoctista","Monera","Plantae"], a:2,
+       e:"O Reino Monera reúne bactérias e cianobactérias, seres procariontes."},
+      {q:"A penicilina, primeiro antibiótico, é produzida por:", o:["Uma bactéria","Um vírus","Um protozoário","Um fungo"], a:3,
+       e:"A penicilina vem de um fungo do gênero Penicillium, descoberta por Fleming em 1928."}
+    ],
+    match:[
+      {t:"Vírus", d:"Acelular; só se reproduz dentro de uma célula"},
+      {t:"Reino Monera", d:"Bactérias: unicelulares e sem núcleo organizado"},
+      {t:"Protozoário", d:"Eucarionte unicelular e heterótrofo, como a ameba"},
+      {t:"Fungos", d:"Heterótrofos por absorção, com parede de quitina"},
+      {t:"Espécie", d:"Seres semelhantes que geram descendentes férteis"}
+    ],
+    ex:[
+      {q:"Cite três características dos seres vivos.",
+       s:["<b>1.</b> Pense na estrutura do corpo.","<b>2.</b> E no ciclo de vida e na obtenção de energia."],
+       ans:"Ex.: são formados por células, se reproduzem e têm metabolismo (também nascem, crescem, morrem e reagem a estímulos)."},
+      {q:"Qual é a diferença entre célula procariótica e eucariótica?",
+       s:["<b>1.</b> Observe onde fica o material genético.","<b>2.</b> Um tipo tem núcleo; o outro não."],
+       ans:"A procariótica não tem núcleo organizado (bactérias); a eucariótica tem núcleo delimitado por membrana."},
+      {q:"Por que é importante classificar os seres vivos?",
+       s:["<b>1.</b> Existem milhões de espécies.","<b>2.</b> Pense em organização e comunicação."],
+       ans:"Para organizar a enorme diversidade, facilitar o estudo e a comunicação entre cientistas e entender o parentesco entre os seres."},
+      {q:"Coloque em ordem, da mais ampla para a mais específica: Espécie, Reino, Classe, Gênero, Filo, Família, Ordem.",
+       s:["<b>1.</b> Comece pelo grupo maior.","<b>2.</b> Termine no grupo mais específico."],
+       ans:"Reino → Filo → Classe → Ordem → Família → Gênero → Espécie."},
+      {q:"Corrija e explique: “canis Familiaris” é o nome científico do cão.",
+       s:["<b>1.</b> O gênero começa com letra maiúscula.","<b>2.</b> A espécie é escrita com minúscula, e o nome vem em itálico."],
+       ans:"<i>Canis familiaris</i>: gênero com maiúscula, espécie com minúscula, em itálico ou sublinhado."},
+      {q:"Por que antibióticos não curam a gripe?",
+       s:["<b>1.</b> Pense em quem causa a gripe.","<b>2.</b> Antibióticos agem contra bactérias."],
+       ans:"Porque a gripe é causada por vírus, e os antibióticos só combatem bactérias."},
+      {q:"Cite duas doenças causadas por vírus e uma forma de prevenção.",
+       s:["<b>1.</b> Lembre das viroses mais comuns.","<b>2.</b> Qual é a principal forma de prevenção?"],
+       ans:"Ex.: gripe e sarampo; prevenção com vacinas (também higiene das mãos)."},
+      {q:"Cite duas formas pelas quais as bactérias são úteis.",
+       s:["<b>1.</b> Pense na natureza e na alimentação.","<b>2.</b> Escolha duas."],
+       ans:"Ex.: decompõem a matéria orgânica e são usadas na produção de iogurte (também fixam nitrogênio e ajudam na digestão)."},
+      {q:"Sobre a doença de Chagas: qual é o causador, qual é o transmissor e como prevenir?",
+       s:["<b>1.</b> É causada por um protozoário com flagelo.","<b>2.</b> O transmissor é um inseto que se esconde em frestas das casas."],
+       ans:"Causada pelo protozoário <i>Trypanosoma cruzi</i>, transmitida pelo barbeiro; prevenção: melhorar as moradias e combater o inseto."},
+      {q:"Por que os fungos não são classificados como plantas?",
+       s:["<b>1.</b> Pense em como as plantas obtêm alimento.","<b>2.</b> Compare a parede celular."],
+       ans:"Porque não fazem fotossíntese (são heterótrofos por absorção) e têm parede celular de quitina."}
+    ]
+  },
+
+  /* ---------------- HISTÓRIA ---------------- */
+  {
+    id:"hist", nome:"História", em:"🏛️", acc:"var(--hist)", dow:"Sex", dt:"16/10",
+    desc:"Os povos que os portugueses encontraram, a conquista e o início da colonização, escravidão e resistência indígena.",
+    resumo:[
+      {t:"Os povos indígenas antes de 1500", h:[
+        "Quando os portugueses chegaram, o território que hoje é o Brasil era habitado havia milhares de anos por <b>centenas de povos indígenas</b>, com <b>muitas línguas</b> e modos de vida diferentes. As estimativas indicam alguns milhões de pessoas.",
+        "Os estudiosos agrupam as línguas indígenas em <k>troncos linguísticos</k>. Os principais são o <b>Tupi</b> e o <b>Macro-Jê</b>; também há famílias como a Aruak e a Karib.",
+        "No litoral viviam principalmente povos do tronco <b>Tupi</b> (tupinambás, tupiniquins, potiguares, tamoios), os primeiros a ter contato com os portugueses. No interior viviam muitos povos do tronco <b>Macro-Jê</b>, que os tupis chamavam de <b>tapuias</b> (“os que não falam a nossa língua”).",
+        "Antes disso, outros povos deixaram marcas importantes, como os <b>sambaquis</b> (grandes montes de conchas no litoral) e a sofisticada <b>cerâmica marajoara</b>, da ilha de Marajó."
+      ]},
+      {t:"O modo de vida dos povos tupis", h:[
+        "Os tupis viviam em <b>aldeias</b> (tabas) com grandes casas coletivas, as <b>ocas</b>, onde moravam várias famílias.",
+        "Praticavam a agricultura de <k>coivara</k>: derrubavam e queimavam um trecho da mata e plantavam. Cultivavam principalmente a <b>mandioca</b> (base da alimentação, usada para fazer farinha), além de milho, batata-doce, amendoim e abóbora. Também caçavam, pescavam e coletavam frutos.",
+        "<b>Divisão do trabalho</b> por sexo e idade: os homens caçavam, pescavam, guerreavam e derrubavam a mata; as mulheres plantavam, colhiam, preparavam os alimentos e faziam cerâmica.",
+        "A <b>terra era coletiva</b>: não havia propriedade privada. O <b>pajé</b> era o líder espiritual e conhecia plantas medicinais; o <b>cacique</b> (morubixaba) era o chefe nas guerras e nas decisões.",
+        "Os povos indígenas nos deixaram muitos conhecimentos e palavras: a rede de dormir, o uso da mandioca, a canoa e nomes como <i>pipoca, jabuti, Paraná e Itaipu</i>."
+      ]},
+      {t:"O encontro com os portugueses (1500–1530)", h:[
+        "Em <b>22 de abril de 1500</b>, a esquadra de <b>Pedro Álvares Cabral</b> chegou ao litoral da atual Bahia. A <b>Carta de Pero Vaz de Caminha</b> descreveu os indígenas e a terra para o rei de Portugal.",
+        "Os europeus olhavam os indígenas a partir dos seus próprios valores (visão <b>eurocêntrica</b>) e os consideravam “selvagens”, ignorando a riqueza de suas culturas.",
+        "Nas primeiras décadas, Portugal se interessou pelo <k>pau-brasil</k>, árvore da qual se extraía uma tinta vermelha para tingir tecidos. A extração era <b>monopólio</b> da Coroa.",
+        "Os indígenas cortavam e carregavam as toras em troca de objetos como facas, machados, espelhos e tecidos. Essa troca sem uso de dinheiro chama-se <k>escambo</k>. Os portugueses construíram <b>feitorias</b> (entrepostos) no litoral para guardar a madeira."
+      ]},
+      {t:"A conquista e o início da colonização", h:[
+        "Por volta de 1530, Portugal decidiu <b>ocupar e colonizar</b> o território, porque outros europeus, principalmente os <b>franceses</b>, também levavam pau-brasil e ameaçavam a posse portuguesa. Além disso, o comércio com as Índias estava rendendo menos.",
+        "A expedição de <b>Martim Afonso de Sousa</b> (1530–1533) combateu os franceses, explorou o litoral e fundou <b>São Vicente</b> (1532), a primeira vila, onde se instalou um dos primeiros engenhos de açúcar.",
+        "Em 1534, o rei criou as <k>capitanias hereditárias</k>: o território foi dividido em grandes faixas de terra entregues a <b>donatários</b> (nobres e comerciantes). Eles deviam povoar, defender e explorar a terra com <b>recursos próprios</b>, e a capitania passava de pai para filho.",
+        "A maioria das capitanias <b>fracassou</b>, por falta de dinheiro, grande distância de Portugal, terras enormes e resistência indígena. As que prosperaram foram <b>Pernambuco</b> (com o açúcar) e <b>São Vicente</b>."
+      ]},
+      {t:"O governo-geral e os jesuítas", h:[
+        "Para centralizar a administração, a Coroa criou o <k>governo-geral</k> em 1548. O primeiro governador-geral, <b>Tomé de Sousa</b>, chegou em 1549 e fundou <b>Salvador</b>, a primeira capital do Brasil.",
+        "Com ele vieram os <b>jesuítas</b>, padres da Companhia de Jesus, liderados por Manuel da Nóbrega. O padre <b>José de Anchieta</b> chegou depois e escreveu uma gramática da língua tupi.",
+        "Os jesuítas tinham o objetivo de <b>catequizar</b> os indígenas, isto é, convertê-los ao catolicismo. Eles os reuniam em <b>aldeamentos (missões)</b>, onde ensinavam a fé cristã e impunham costumes europeus.",
+        "Os jesuítas se opunham à escravização dos indígenas, o que gerava conflitos com os colonos. Por outro lado, a catequese provocou a <b>perda de muitos elementos das culturas indígenas</b>, como crenças, rituais e modos de viver."
+      ]},
+      {t:"A escravidão indígena", h:[
+        "Os colonos precisavam de mão de obra para as lavouras e os engenhos e passaram a <b>escravizar indígenas</b>.",
+        "Formas de escravização: as <k>guerras justas</k>, autorizadas pela Coroa contra povos considerados hostis ou que recusassem a fé cristã; os <b>resgates</b>, compra de prisioneiros de guerra de outros povos; e as expedições dos <b>bandeirantes</b> paulistas, que no século XVII capturavam indígenas no interior.",
+        "A Coroa criou leis contra a escravidão indígena, como a de 1570, mas elas tinham exceções e eram desrespeitadas. A proibição definitiva veio em 1755.",
+        "As <b>doenças</b> trazidas pelos europeus, como varíola, sarampo e gripe, mataram muitos indígenas, que não tinham defesas contra elas. Somadas às guerras e à escravidão, provocaram uma enorme <b>queda da população indígena</b>.",
+        "A partir do fim do século XVI, os <b>africanos escravizados</b> passaram a ser a principal mão de obra nos engenhos, porque o tráfico de pessoas escravizadas era muito lucrativo para comerciantes e para a Coroa."
+      ]},
+      {t:"A resistência indígena", h:[
+        "Os indígenas <b>não aceitaram passivamente</b> a conquista. Eles resistiram de várias formas.",
+        "<b>Guerras</b>: na <k>Confederação dos Tamoios</k>, em meados do século XVI, povos tupinambás do litoral de São Paulo e Rio de Janeiro se uniram e se aliaram aos <b>franceses</b> contra os portugueses. Na <b>Guerra dos Bárbaros</b> (segunda metade do século XVII e início do XVIII), povos do sertão nordestino lutaram contra o avanço das fazendas de gado.",
+        "<b>Outras formas</b>: fugas para o interior, recusa ao trabalho forçado, ataques a engenhos e povoados e a manutenção escondida de suas línguas, crenças e rituais.",
+        "A resistência continua até hoje: os povos indígenas lutam pela <b>demarcação de suas terras</b> e pelo respeito às suas culturas, direitos garantidos pela <b>Constituição de 1988</b>. Segundo o Censo de 2022, vivem no Brasil cerca de <b>1,7 milhão de indígenas</b>."
+      ]}
+    ],
+    quiz:[
+      {q:"Os povos que viviam no litoral e tiveram os primeiros contatos com os portugueses pertenciam principalmente ao tronco linguístico:", o:["Macro-Jê","Tupi","Karib","Aruak"], a:1,
+       e:"No litoral predominavam povos tupis, como tupinambás e tupiniquins."},
+      {q:"O que era o escambo?", o:["Um tipo de moeda portuguesa","A troca de trabalho ou produtos por objetos, sem dinheiro","Um imposto pago ao rei","Uma aldeia indígena"], a:1,
+       e:"No escambo, os indígenas cortavam pau-brasil em troca de objetos como facas e espelhos."},
+      {q:"As capitanias hereditárias eram:", o:["Aldeias jesuítas","Faixas de terra entregues a donatários","Fortes militares franceses","Cidades indígenas"], a:1,
+       e:"Em 1534, o território foi dividido em faixas entregues a donatários, que deviam povoá-las com recursos próprios."},
+      {q:"Qual foi a primeira capital do Brasil, fundada por Tomé de Sousa em 1549?", o:["Rio de Janeiro","São Vicente","Salvador","Recife"], a:2,
+       e:"Salvador foi fundada pelo primeiro governador-geral e foi capital até 1763."},
+      {q:"Qual foi uma das principais causas da morte de indígenas após a chegada dos europeus?", o:["Terremotos","Doenças trazidas pelos europeus","Falta de terras férteis","Excesso de chuvas"], a:1,
+       e:"Varíola, sarampo e gripe mataram muitos indígenas, que não tinham defesas contra essas doenças."}
+    ],
+    match:[
+      {t:"Escambo", d:"Troca de trabalho ou produtos por objetos, sem dinheiro"},
+      {t:"Pau-brasil", d:"Árvore da qual se extraía tinta vermelha"},
+      {t:"Capitanias hereditárias", d:"Faixas de terra entregues a donatários em 1534"},
+      {t:"Governo-geral", d:"Administração centralizada; sede em Salvador"},
+      {t:"Confederação dos Tamoios", d:"Aliança de povos tupinambás com os franceses contra os portugueses"}
+    ],
+    ex:[
+      {q:"Cite os dois principais troncos linguísticos indígenas.",
+       s:["<b>1.</b> Um predominava no litoral.","<b>2.</b> O outro, no interior."],
+       ans:"Tupi e Macro-Jê."},
+      {q:"Como era a divisão do trabalho entre os povos tupis?",
+       s:["<b>1.</b> Ela era feita por sexo e idade.","<b>2.</b> Pense nas tarefas da mata e da roça."],
+       ans:"Os homens caçavam, pescavam, guerreavam e derrubavam a mata; as mulheres plantavam, colhiam, preparavam os alimentos e faziam cerâmica."},
+      {q:"O que era a agricultura de coivara e qual era o principal alimento cultivado?",
+       s:["<b>1.</b> Pense em como abriam espaço na mata.","<b>2.</b> Com esse alimento se fazia farinha."],
+       ans:"Derrubar e queimar um trecho da mata para plantar; o principal alimento era a mandioca."},
+      {q:"O que foi o escambo e por que era usado na extração do pau-brasil?",
+       s:["<b>1.</b> É uma troca sem dinheiro.","<b>2.</b> Os portugueses precisavam do trabalho indígena."],
+       ans:"Troca do trabalho indígena por objetos como facas e espelhos; era a forma de obter a mão de obra para cortar e carregar a madeira."},
+      {q:"Por que Portugal decidiu colonizar o Brasil a partir de 1530?",
+       s:["<b>1.</b> Outros europeus frequentavam o litoral.","<b>2.</b> O comércio com as Índias estava dando menos lucro."],
+       ans:"Para garantir a posse da terra contra outros europeus, principalmente os franceses, e buscar novas fontes de lucro."},
+      {q:"Como funcionavam as capitanias hereditárias e por que a maioria fracassou?",
+       s:["<b>1.</b> Pense em quem recebia as terras e o que devia fazer.","<b>2.</b> Pense nas dificuldades enfrentadas."],
+       ans:"Donatários recebiam faixas de terra para povoar e explorar com recursos próprios, de forma hereditária; a maioria fracassou por falta de dinheiro, distância, tamanho das terras e resistência indígena."},
+      {q:"Quem foi o primeiro governador-geral do Brasil e qual cidade ele fundou?",
+       s:["<b>1.</b> Ele chegou em 1549.","<b>2.</b> A cidade foi a primeira capital."],
+       ans:"Tomé de Sousa, que fundou Salvador."},
+      {q:"Qual era o objetivo dos jesuítas e qual foi uma consequência disso para os indígenas?",
+       s:["<b>1.</b> Pense na religião.","<b>2.</b> O que aconteceu com as culturas indígenas?"],
+       ans:"Catequizar (converter ao catolicismo); isso levou à perda de muitas crenças, rituais e costumes indígenas."},
+      {q:"Cite duas formas usadas pelos colonos para escravizar indígenas.",
+       s:["<b>1.</b> Uma era autorizada pela Coroa.","<b>2.</b> Outras envolviam compra e captura no interior."],
+       ans:"Ex.: guerras justas e resgates (também as bandeiras)."},
+      {q:"Cite duas formas de resistência indígena à colonização.",
+       s:["<b>1.</b> Pense em lutas armadas.","<b>2.</b> E em atitudes do dia a dia."],
+       ans:"Ex.: guerras, como a Confederação dos Tamoios, e fugas para o interior (também recusa ao trabalho e preservação da cultura)."}
+    ]
+  }
+];
+/* =========================================================
+   NÍVEIS / PATENTES
+   ========================================================= */
+var RANKS = [
+  {min:0,    nome:"Iniciante",  em:"🌱"},
+  {min:120,  nome:"Aprendiz",   em:"📗"},
+  {min:280,  nome:"Explorador", em:"🧭"},
+  {min:480,  nome:"Estudioso",  em:"📚"},
+  {min:720,  nome:"Craque",     em:"⭐"},
+  {min:1000, nome:"Mestre",     em:"🏆"}
+];
+function rankFor(xp){
+  var r = RANKS[0];
+  for(var i=0;i<RANKS.length;i++){ if(xp >= RANKS[i].min) r = RANKS[i]; }
+  return r;
+}
+function nextRank(xp){
+  for(var i=0;i<RANKS.length;i++){ if(xp < RANKS[i].min) return RANKS[i]; }
+  return null;
+}
+
+/* =========================================================
+   ESTADO + PERSISTÊNCIA
+   ========================================================= */
+var STORE_KEY = "rev7ano_t3_v1";
+var state = { xp:0, streak:0, best:0, done:{}, answers:{}, selfcheck:{} };
+
+function freshDone(){ var o={}; SUBJECTS.forEach(function(s){ o[s.id]={resumo:false,quiz:false,match:false,ex:false}; }); return o; }
+function loadState(){
+  try{ var raw=localStorage.getItem(STORE_KEY); if(raw) state=JSON.parse(raw); }catch(e){}
+  if(!state.done) state.done={};
+  SUBJECTS.forEach(function(s){ if(!state.done[s.id]) state.done[s.id]={resumo:false,quiz:false,match:false,ex:false}; });
+  if(typeof state.xp!=="number") state.xp=0;
+  if(typeof state.streak!=="number") state.streak=0;
+  if(typeof state.best!=="number") state.best=0;
+  if(!state.answers) state.answers={};
+  if(!state.selfcheck) state.selfcheck={};
+}
+function saveState(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+function wipeState(){
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  state={ xp:0, streak:0, best:0, done:freshDone(), answers:{}, selfcheck:{} };
+  saveState();
+}
+
+function subjProgress(id){
+  var d=state.done[id], k=["resumo","quiz","match","ex"], c=0;
+  k.forEach(function(x){ if(d[x]) c++; }); return Math.round(c/4*100);
+}
+function isMaster(id){ return subjProgress(id)===100; }
+
+function addXP(n,msg,isXpToast){
+  var beforeRank=rankFor(state.xp).nome;
+  state.xp+=n; saveState(); renderStatus();
+  var afterRank=rankFor(state.xp).nome;
+  if(msg) toast(msg, isXpToast);
+  if(afterRank!==beforeRank){
+    setTimeout(function(){ toast("Nova patente: "+rankFor(state.xp).em+" "+afterRank+"!", true); burstConfetti(70); }, 700);
+  }
+}
+function bumpStreak(){
+  state.streak++; if(state.streak>state.best) state.best=state.streak;
+  var bonus=0;
+  if(state.streak===3) bonus=5; else if(state.streak===5) bonus=10; else if(state.streak>0 && state.streak%10===0) bonus=20;
+  saveState(); renderStatus(); pulseFlame();
+  if(bonus){ addXP(bonus, "🔥 Sequência de "+state.streak+"! +"+bonus+" XP bônus", true); }
+}
+function breakStreak(){ state.streak=0; saveState(); renderStatus(); }
+
+function markDone(id,part){
+  if(!state.done[id][part]){
+    state.done[id][part]=true; saveState();
+    renderCards(); renderWeek();
+    if(isMaster(id)) celebrateSubject(id);
+  }
+}
+
+/* =========================================================
+   RENDER — HERO / STATUS / SEMANA / CARDS
+   ========================================================= */
+var elWeek=document.getElementById("week");
+var elCards=document.getElementById("cards");
+var elHome=document.getElementById("home");
+var elSubjView=document.getElementById("subjectView");
+
+function shortName(n){ return n.replace("Língua Portuguesa","Português"); }
+
+function renderStatus(){
+  var r=rankFor(state.xp), nx=nextRank(state.xp);
+  document.getElementById("lvlEmb").textContent=r.em;
+  document.getElementById("lvlRank").textContent=r.nome;
+  var fill=document.getElementById("lvlFill");
+  if(nx){
+    var span=nx.min-r.min, into=state.xp-r.min;
+    fill.style.width=Math.min(100,Math.round(into/span*100))+"%";
+    document.getElementById("lvlSub").textContent=state.xp+" XP · faltam "+(nx.min-state.xp)+" p/ "+nx.nome;
+  }else{
+    fill.style.width="100%";
+    document.getElementById("lvlSub").textContent=state.xp+" XP · patente máxima!";
+  }
+  document.getElementById("streakNum").textContent=state.streak;
+}
+function pulseFlame(){
+  var f=document.getElementById("flame"); f.classList.add("pulse");
+  setTimeout(function(){ f.classList.remove("pulse"); },220);
+}
+
+function renderWeek(){
+  var html="";
+  SUBJECTS.forEach(function(s){
+    var p=subjProgress(s.id), m=isMaster(s.id)?" master":"";
+    html+='<button class="day'+m+'" data-id="'+s.id+'">'
+      +'<span class="medal">🥇</span>'
+      +'<div class="dow">'+s.dow+'</div><div class="dt">'+s.dt+'</div>'
+      +'<div class="em">'+s.em+'</div><div class="nm">'+shortName(s.nome)+'</div>'
+      +'<div class="mini"><i style="width:'+p+'%"></i></div></button>';
+  });
+  elWeek.innerHTML=html;
+  Array.prototype.forEach.call(elWeek.querySelectorAll(".day"),function(b){
+    b.addEventListener("click",function(){ openSubject(b.getAttribute("data-id")); });
+  });
+}
+
+function renderCards(){
+  var html="";
+  SUBJECTS.forEach(function(s){
+    var p=subjProgress(s.id), m=isMaster(s.id)?" master":"";
+    html+='<div class="card'+m+'" data-id="'+s.id+'" style="--acc:'+s.acc+'">'
+      +'<div class="stripe"></div>'
+      +'<div class="top"><span class="badge">'+s.dow+' · '+s.dt+'</span><span class="em">'+s.em+'</span></div>'
+      +'<span class="medal">🥇</span>'
+      +'<h3>'+shortName(s.nome)+'</h3>'
+      +'<p class="desc">'+s.desc+'</p>'
+      +'<div class="ring-row"><div class="ring" style="--p:'+p+'; --acc:'+s.acc+'"><span>'+p+'%</span></div>'
+      +'<span class="go">'+(isMaster(s.id)?"Revisar de novo →":"Revisar →")+'</span></div></div>';
+  });
+  elCards.innerHTML=html;
+  Array.prototype.forEach.call(elCards.querySelectorAll(".card"),function(c){
+    c.addEventListener("click",function(){ openSubject(c.getAttribute("data-id")); });
+  });
+}
+
+/* =========================================================
+   VISTA DA MATÉRIA
+   ========================================================= */
+function openSubject(id){
+  var s=SUBJECTS.filter(function(x){return x.id===id;})[0]; if(!s) return;
+  elHome.style.display="none";
+  elSubjView.innerHTML=buildSubject(s);
+  wireSubject(s);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function closeSubject(){
+  elSubjView.innerHTML=""; elHome.style.display="block";
+  renderCards(); renderWeek();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function withKeys(str){ return str.replace(/<k>/g,'<span class="key">').replace(/<\/k>/g,'</span>'); }
+function tick(id,part){ return state.done[id][part]?'<span class="tick">✓</span>':''; }
+
+function buildSubject(s){
+  var h='<div class="subject active" style="--accV:'+s.acc+'">';
+  h+='<div class="backbar"><button class="back" id="btnBack">← Todas as matérias</button></div>';
+  h+='<div class="subj-head"><span class="em">'+s.em+'</span><div><h2>'+s.nome+'</h2><div class="u">Prova: '+s.dow+' · '+s.dt+'</div></div></div>';
+
+  h+='<div class="medal-banner" id="medalBanner"><div class="big">🥇</div><div class="t">Medalha conquistada!</div><div class="s">Você completou as 4 atividades desta matéria.</div></div>';
+
+  h+='<div class="tabs">'
+    +'<button class="tab on" data-p="resumo">Resumo'+tick(s.id,"resumo")+'</button>'
+    +'<button class="tab" data-p="quiz">Quiz'+tick(s.id,"quiz")+'</button>'
+    +'<button class="tab" data-p="match">Ligar'+tick(s.id,"match")+'</button>'
+    +'<button class="tab" data-p="ex">Exercícios'+tick(s.id,"ex")+'</button></div>';
+
+  /* RESUMO */
+  h+='<div class="pane on" data-pane="resumo">';
+  s.resumo.forEach(function(r){
+    h+='<div class="note"><h4>'+r.t+'</h4>';
+    r.h.forEach(function(p){ h+='<p>'+withKeys(p)+'</p>'; });
+    h+='</div>';
+  });
+  h+='<div class="done-flag show" style="border-style:solid">Terminou de ler? <button class="reveal" id="resumoDone" style="margin-left:8px">Marcar resumo como revisado</button></div>';
+  h+='</div>';
+
+  /* QUIZ */
+  h+='<div class="pane" data-pane="quiz">';
+  h+='<div class="scorebar">🎯 <span id="quizScore">Acertos: 0 de '+s.quiz.length+'</span></div>';
+  s.quiz.forEach(function(q,i){
+    h+='<div class="q" data-qi="'+i+'"><div class="qn">Questão '+(i+1)+'</div><div class="qt">'+q.q+'</div><div class="opts">';
+    q.o.forEach(function(op,j){ h+='<button class="opt" data-j="'+j+'"><span class="l">'+String.fromCharCode(65+j)+'</span><span>'+op+'</span></button>'; });
+    h+='</div><div class="explain"><b>Por quê:</b> '+q.e+'</div></div>';
+  });
+  h+='<div class="done-flag" data-flag="quiz">Quiz concluído! 🎯</div></div>';
+
+  /* MATCH */
+  h+='<div class="pane" data-pane="match">';
+  h+='<p class="match-help">Toque num <b>termo</b> à esquerda e depois na <b>definição</b> certa à direita. Cada acerto vale XP; erro zera sua sequência 🔥.</p>';
+  h+='<div class="match"><div class="col terms"><h4>Termos</h4><div data-terms></div></div><div class="col defs"><h4>Definições</h4><div data-defs></div></div></div>';
+  h+='<div class="done-flag" data-flag="match">Tudo ligado corretamente! 🔗</div></div>';
+
+  /* EX */
+  h+='<div class="pane" data-pane="ex">';
+  s.ex.forEach(function(x,i){
+    var saved=(state.answers[s.id]&&state.answers[s.id][i])?state.answers[s.id][i]:"";
+    h+='<div class="ex"><div class="en">Exercício '+(i+1)+'</div><div class="et">'+x.q+'</div>';
+    h+='<div class="ans-label">Sua resposta<span class="ans-saved" data-saved="'+i+'">salvo ✓</span></div>';
+    h+='<textarea class="ans-field" data-ans="'+i+'" placeholder="Escreva aqui sua resposta antes de conferir...">'+escapeHtml(saved)+'</textarea>';
+    h+='<div class="ex-actions"><button class="reveal" data-rev="'+i+'">Conferir resolução</button></div>';
+    h+='<div class="sol" data-sol="'+i+'">';
+    x.s.forEach(function(st){ h+='<p class="step">'+st+'</p>'; });
+    h+='<div class="ans">✓ Resposta: '+x.ans+'</div></div>';
+    h+='<div class="selfcheck" data-sc="'+i+'"><span class="lbl">Como você foi?</span>'
+      +'<button class="sc-btn good" data-scv="good">Acertei 😄</button>'
+      +'<button class="sc-btn soso" data-scv="soso">Vou revisar 📌</button></div>';
+    h+='</div>';
+  });
+  h+='<div class="done-flag" data-flag="ex">Exercícios revisados! ✏️</div></div>';
+
+  h+='</div>';
+  return h;
+}
+function escapeHtml(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* =========================================================
+   INTERAÇÕES
+   ========================================================= */
+function wireSubject(s){
+  var root=elSubjView;
+  root.querySelector("#btnBack").addEventListener("click",closeSubject);
+  if(isMaster(s.id)) root.querySelector("#medalBanner").classList.add("show");
+
+  var tabs=root.querySelectorAll(".tab"), panes=root.querySelectorAll(".pane");
+  Array.prototype.forEach.call(tabs,function(t){
+    t.addEventListener("click",function(){
+      Array.prototype.forEach.call(tabs,function(x){x.classList.remove("on");});
+      Array.prototype.forEach.call(panes,function(x){x.classList.remove("on");});
+      t.classList.add("on");
+      root.querySelector('[data-pane="'+t.getAttribute("data-p")+'"]').classList.add("on");
+    });
+  });
+
+  var rd=root.querySelector("#resumoDone");
+  if(state.done[s.id].resumo){ rd.textContent="Revisado ✓"; rd.disabled=true; }
+  rd.addEventListener("click",function(){
+    if(!state.done[s.id].resumo){ markDone(s.id,"resumo"); addXP(40,"+40 XP · resumo revisado",true); }
+    this.textContent="Revisado ✓"; this.disabled=true; refreshTicks(s,root);
+  });
+
+  wireQuiz(s,root);
+  wireMatch(s,root);
+  wireEx(s,root);
+}
+function refreshTicks(s,root){
+  var map={resumo:0,quiz:1,match:2,ex:3}, tabs=root.querySelectorAll(".tab");
+  ["resumo","quiz","match","ex"].forEach(function(p,i){
+    var t=tabs[i]; var has=t.querySelector(".tick");
+    if(state.done[s.id][p] && !has){ t.insertAdjacentHTML("beforeend",'<span class="tick">✓</span>'); }
+  });
+  if(isMaster(s.id)) root.querySelector("#medalBanner").classList.add("show");
+}
+
+function wireQuiz(s,root){
+  var answered={}, hits=0;
+  var scoreEl=root.querySelector("#quizScore");
+  var qs=root.querySelectorAll('[data-pane="quiz"] .q');
+  Array.prototype.forEach.call(qs,function(qEl){
+    var qi=parseInt(qEl.getAttribute("data-qi"),10), correct=s.quiz[qi].a, opts=qEl.querySelectorAll(".opt");
+    Array.prototype.forEach.call(opts,function(op){
+      op.addEventListener("click",function(){
+        if(answered[qi]) return; answered[qi]=true;
+        var j=parseInt(op.getAttribute("data-j"),10);
+        Array.prototype.forEach.call(opts,function(o){o.disabled=true;});
+        if(j===correct){ op.classList.add("correct"); hits++; scoreEl.textContent="Acertos: "+hits+" de "+s.quiz.length; addXP(10,"Certo! +10 XP",true); bumpStreak(); }
+        else{ op.classList.add("wrong"); opts[correct].classList.add("correct"); breakStreak(); }
+        qEl.querySelector(".explain").classList.add("show");
+        if(Object.keys(answered).length===s.quiz.length){
+          if(!state.done[s.id].quiz){ markDone(s.id,"quiz"); addXP(20,"Quiz completo! +20 XP",true); refreshTicks(s,root); }
+          root.querySelector('[data-flag="quiz"]').classList.add("show");
+          if(hits===s.quiz.length){ addXP(15,"Gabaritou o quiz! +15 XP",true); burstConfetti(50); }
+        }
+      });
+    });
+  });
+}
+
+function wireMatch(s,root){
+  var termsBox=root.querySelector("[data-terms]"), defsBox=root.querySelector("[data-defs]");
+  var pairs=s.match, defsShuffled=shuffle(pairs.map(function(p,i){return {i:i,d:p.d};}));
+  var tHtml=""; pairs.forEach(function(p,i){ tHtml+='<button class="chip" data-term="'+i+'">'+p.t+'</button>'; });
+  var dHtml=""; defsShuffled.forEach(function(o){ dHtml+='<button class="chip" data-def="'+o.i+'">'+o.d+'</button>'; });
+  termsBox.innerHTML=tHtml; defsBox.innerHTML=dHtml;
+  var selTerm=null, solved=0;
+  function clearSel(){ if(selTerm){ selTerm.classList.remove("sel"); selTerm=null; } }
+  Array.prototype.forEach.call(termsBox.querySelectorAll(".chip"),function(b){
+    b.addEventListener("click",function(){ if(b.classList.contains("done"))return; clearSel(); selTerm=b; b.classList.add("sel"); });
+  });
+  Array.prototype.forEach.call(defsBox.querySelectorAll(".chip"),function(b){
+    b.addEventListener("click",function(){
+      if(b.classList.contains("done"))return;
+      if(!selTerm){ toast("Escolha primeiro um termo à esquerda"); return; }
+      if(selTerm.getAttribute("data-term")===b.getAttribute("data-def")){
+        selTerm.classList.remove("sel"); selTerm.classList.add("done"); b.classList.add("done"); selTerm=null; solved++;
+        addXP(8,"Ligação certa! +8 XP",true); bumpStreak();
+        if(solved===pairs.length){
+          if(!state.done[s.id].match){ markDone(s.id,"match"); addXP(16,"Todas ligadas! +16 XP",true); refreshTicks(s,root); }
+          root.querySelector('[data-flag="match"]').classList.add("show"); burstConfetti(40);
+        }
+      }else{ b.classList.add("miss"); setTimeout(function(){b.classList.remove("miss");},350); breakStreak(); clearSel(); }
+    });
+  });
+}
+
+function wireEx(s,root){
+  var revealed={};
+  // answer autosave
+  Array.prototype.forEach.call(root.querySelectorAll("[data-ans]"),function(ta){
+    var i=ta.getAttribute("data-ans");
+    ta.addEventListener("input",function(){
+      if(!state.answers[s.id]) state.answers[s.id]={};
+      state.answers[s.id][i]=ta.value; saveState();
+      var tag=root.querySelector('[data-saved="'+i+'"]'); tag.classList.add("show");
+      clearTimeout(ta._t); ta._t=setTimeout(function(){ tag.classList.remove("show"); },1200);
+    });
+  });
+  // reveal + selfcheck
+  Array.prototype.forEach.call(root.querySelectorAll("[data-rev]"),function(b){
+    b.addEventListener("click",function(){
+      var i=b.getAttribute("data-rev");
+      var sol=root.querySelector('[data-sol="'+i+'"]');
+      var open=sol.classList.toggle("show");
+      b.textContent=open?"Ocultar resolução":"Conferir resolução";
+      if(open){ revealed[i]=true; root.querySelector('[data-sc="'+i+'"]').classList.add("show"); }
+      if(Object.keys(revealed).length===s.ex.length && !state.done[s.id].ex){
+        markDone(s.id,"ex"); addXP(40,"+40 XP · exercícios concluídos",true); refreshTicks(s,root);
+        root.querySelector('[data-flag="ex"]').classList.add("show");
+      }
+    });
+  });
+  Array.prototype.forEach.call(root.querySelectorAll("[data-sc]"),function(box){
+    var i=box.getAttribute("data-sc");
+    Array.prototype.forEach.call(box.querySelectorAll(".sc-btn"),function(btn){
+      btn.addEventListener("click",function(){
+        if(!state.selfcheck[s.id]) state.selfcheck[s.id]={};
+        if(state.selfcheck[s.id][i]) return;
+        state.selfcheck[s.id][i]=btn.getAttribute("data-scv"); saveState();
+        Array.prototype.forEach.call(box.querySelectorAll(".sc-btn"),function(o){o.classList.add("picked");});
+        btn.classList.remove("picked");
+        if(btn.getAttribute("data-scv")==="good"){ addXP(5,"+5 XP pela honestidade 💪",true); }
+        else{ toast("Anotado! Volte nesse depois 📌"); }
+      });
+    });
+  });
+}
+
+/* =========================================================
+   CELEBRAÇÃO
+   ========================================================= */
+function celebrateSubject(id){
+  var s=SUBJECTS.filter(function(x){return x.id===id;})[0];
+  burstConfetti(120);
+  toast("🥇 Medalha de "+shortName(s.nome)+" conquistada!", true);
+  var banner=document.getElementById("medalBanner");
+  if(banner) banner.classList.add("show");
+}
+var CONF_COLORS=["#cdab5a","#c1533f","#2f6b5e","#6b4f9e","#2b5a8c","#f2dd97"];
+function burstConfetti(n){
+  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  for(var i=0;i<n;i++){ makeConfetto(); }
+}
+function makeConfetto(){
+  var d=document.createElement("div"); d.className="confetti";
+  var left=Math.random()*100;
+  d.style.left=left+"vw";
+  d.style.background=CONF_COLORS[Math.floor(Math.random()*CONF_COLORS.length)];
+  d.style.transform="rotate("+(Math.random()*360)+"deg)";
+  document.body.appendChild(d);
+  var fall=900+Math.random()*900;
+  var drift=(Math.random()*160-80);
+  var rot=Math.random()*720-360;
+  var anim=d.animate(
+    [{transform:"translate(0,0) rotate(0deg)", opacity:1},
+     {transform:"translate("+drift+"px,"+(window.innerHeight+40)+"px) rotate("+rot+"deg)", opacity:.9}],
+    {duration:fall, easing:"cubic-bezier(.2,.6,.5,1)"}
+  );
+  anim.onfinish=function(){ d.remove(); };
+}
+
+/* =========================================================
+   UTILS
+   ========================================================= */
+function shuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+var toastTimer=null;
+function toast(msg,xp){
+  var el=document.getElementById("toast");
+  el.textContent=msg; el.className="toast show"+(xp?" xp":"");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ el.classList.remove("show"); },1700);
+}
+
+/* =========================================================
+   RESET (LIMPAR DADOS)
+   ========================================================= */
+var modalBg=document.getElementById("modalBg");
+document.getElementById("btnReset").addEventListener("click",function(){ modalBg.classList.add("show"); });
+document.getElementById("mCancel").addEventListener("click",function(){ modalBg.classList.remove("show"); });
+modalBg.addEventListener("click",function(e){ if(e.target===modalBg) modalBg.classList.remove("show"); });
+document.getElementById("mConfirm").addEventListener("click",function(){
+  wipeState(); modalBg.classList.remove("show");
+  closeSubject(); renderStatus(); renderWeek(); renderCards();
+  toast("Tudo limpo! Bons estudos 🌱");
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+loadState();
+renderStatus();
+renderWeek();
+renderCards();
+</script>
+</body>
+</html>
